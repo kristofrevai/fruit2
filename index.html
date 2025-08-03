@@ -1033,6 +1033,31 @@
                     max-width: fit-content;
                 }
             }
+            body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      color: white;
+      text-align: center;
+      padding-top: 40vh;
+      font-size: 2rem;
+    }
         </style>
         <!-- Google Tag Manager -->
         <script>
@@ -1391,10 +1416,10 @@
         <main id="brx-content">
             <section class="brxe-section hero has-bg-video">
                 <div class="bricks-background-video-wrapper bricks-lazy-video">
-  <video autoplay loop muted playsinline
-       style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: -1;">
-  <source src="https://revaifruit.b-cdn.net/fruit.mp4" type="video/mp4">
-</video>
+   <video class="background-video" autoplay loop muted playsinline>
+    <source src="https://revaifruit.b-cdn.net/fruit.mp4" type="video/mp4">
+    A böngésződ nem támogatja a videólejátszást.
+  </video>
 
 
 
@@ -2079,6 +2104,7 @@
     )();
 </script>
 </body></html>
+
 
 
 
