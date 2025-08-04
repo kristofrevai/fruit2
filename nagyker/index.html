@@ -1,12 +1,264 @@
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <title>Zöldség-Gyümölcs Nagykereskedelem</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicon -->
+  <link href="img/favicon.ico" rel="icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Lora:wght@600;700&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Libraries -->
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+  <!-- Styles -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+
+  <!-- Custom Navigation Styles -->
+  <style>
+    header {
+      text-align: center;
+      padding-top: 0;
+      font-family: 'Raleway', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 300;
+      color: black;
+    }
+
+    .logo img {
+      max-height: 150px;
+    }
+
+    nav {
+      margin-top: -10px;
+    }
+
+    .menu {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
+      flex-wrap: wrap;
+      margin-top: 5px;
+    }
+
+    .menu li {
+      position: relative;
+    }
+
+    .menu a {
+      color: black;
+      text-decoration: none;
+      position: relative;
+      padding: 10px;
+      display: inline-block;
+      letter-spacing: 1px;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 300;
+    }
+
+    .menu a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 5px;
+      width: 100%;
+      height: 2px;
+      background: orange;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .menu a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .dropdown .submenu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #444;
+      padding: 10px 0;
+      list-style: none;
+      min-width: 180px;
+      z-index: 1000;
+      border-radius: 5px;
+    }
+
+    .dropdown:hover .submenu {
+      display: block;
+    }
+
+    .submenu li {
+      padding: 5px 20px;
+    }
+
+    .submenu li a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .submenu li a:hover {
+      text-decoration: underline;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid orange;
+      margin: 15px auto -5px auto;
+      width: 90%;
+      margin-top: -30px;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Ez a nagykereskedelmi aloldal</h1>
-  <p>Ide jöhet bővebb leírás a termékkörről, kínálatról stb.</p>
-  <a href="/">Vissza a főoldalra</a>
+  <!-- Spinner -->
+  <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
+
+  <!-- Header with Logo + Nav -->
+  <header>
+    <div class="logo">
+      <img src="asd.png" alt="Révai Fruit KFT.">
+    </div>
+    <hr>
+    <nav>
+      <ul class="menu">
+        <li><a href="https://revaifruitkft.hu/">KEZDŐLAP</a></li>
+        <li><a href="https://revaifruitkft.hu/tisztitott">TISZTÍTOTT ZÖLDSÉGEK</a></li>
+        <li><a href="https://revaifruitkft.hu/termeklista">TERMÉKLISTA</a></li>
+        <li><a href="https://revaifruitkft.hu/referenciak">REFERENCIÁK</a></li>
+        <li><a href="https://revaifruitkft.hu/kapcsolat">KAPCSOLAT</a></li>
+        <li><a href="https://revaifruitkft.hu/galeria">GALÉRIA</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
+    <!-- About Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="about-img position-relative overflow-hidden p-5 pe-0">
+                        <img class="img-fluid w-100" src="targ.jpeg">
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                    <h1 class="display-5 mb-4">Friss zöldségek és gyümölcsök nagykereskedelme – a Révai Fruit Kft.-től</h1>
+                    <p class="mb-4">A Révai Fruit Kft. elkötelezett a prémium minőség, a megbízhatóság és a gyors kiszolgálás mellett. Naponta frissülő kínálatunkban hazai és import zöldségek, gyümölcsök széles választékát biztosítjuk éttermek, boltok, feldolgozók és viszonteladók számára – mindig pontosan, partnereink igényeire szabva.
+
+
+
+</p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Friss, gondosan válogatott termékek</p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Gyors és pontos kiszállítás</p>
+                    <p><i class="fa fa-check text-primary me-3"></i>Rugalmasság és személyre szabott ajánlatok</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+
+    <!-- Feature Start -->
+    <div class="container-fluid bg-light bg-icon my-5 py-6">
+        <div class="container">
+            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <h1 class="display-5 mb-3">A Révai Fruit Kft. előnyei egy pillantásra</h1>
+                <p>Amitől a Révai Fruit Kft. más, mint a többi</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="bg-white text-center h-100 p-4 p-xl-5">
+                        <img class="img-fluid mb-4" src="img/icon-1.png" alt="" style="height: 220px;">
+                        <h4 class="mb-3">Frissesség minden nap</h4>
+                        <p class="mb-4">Termékeinket naponta frissen szerezzük be, hogy partnereinkhez mindig kiváló minőségű zöldségek és gyümölcsök kerüljenek.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="bg-white text-center h-100 p-4 p-xl-5">
+                        <img class="img-fluid mb-4" src="img/icon-2.png" alt="" style="height: 220px;">
+                        <h4 class="mb-3">Széles választék, precíz szortírozás</h4>
+                        <p class="mb-4">Friss, hazai és import zöldségek, gyümölcsök széles palettáját kínáljuk. Minden tételt gondosan előválogatunk, hogy partnereink pontosan azt kapják, amit elvárnak – meglepetések nélkül.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="bg-white text-center h-100 p-4 p-xl-5">
+                        <img class="img-fluid mb-4" src="img/icon-3.png" alt="" style="height: 220px;">
+                        <h4 class="mb-3">Testre szabott kiszolgálás</h4>
+                        <p class="mb-4">Legyen szó napi rendelésről vagy egyedi igényekről, nálunk a pontosság és az alkalmazkodás alapelv. Tudjuk, mit jelent időre, megfelelő minőségben dolgozni.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Feature End -->
+
+
+    <!-- Product Start -->
+    
+    <!-- Product End -->
+
+
+    <!-- Firm Visit Start -->
+
+    <!-- Firm Visit End -->
+
+
+    <!-- Testimonial Start -->
+
+    <!-- Testimonial End -->
+
+
+    <!-- Blog Start -->
+
+    <!-- Blog End -->
+
+
+    <!-- Footer Start -->
+    
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
 </body>
+
 </html>
