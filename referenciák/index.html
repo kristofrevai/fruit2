@@ -1,12 +1,479 @@
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Referenciák</title>
+  <meta charset="utf-8">
+  <title>Partnereink</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicon -->
+  <link href="img/favicon.ico" rel="icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Lora:wght@600;700&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Libraries -->
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+  <!-- Styles -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+
+  <!-- Custom Navigation Styles -->
+  <style>
+    header {
+      text-align: center;
+      padding-top: 0;
+      font-family: 'Raleway', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 300;
+      color: black;
+    }
+
+    .logo img {
+      max-height: 150px;
+    }
+
+    nav {
+      margin-top: -10px;
+    }
+
+    .menu {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
+      flex-wrap: wrap;
+      margin-top: 5px;
+    }
+
+    .menu li {
+      position: relative;
+    }
+
+    .menu a {
+      color: black;
+      text-decoration: none;
+      position: relative;
+      padding: 10px;
+      display: inline-block;
+      letter-spacing: 1px;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 300;
+    }
+
+    .menu a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 5px;
+      width: 100%;
+      height: 2px;
+      background: orange;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .menu a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .dropdown .submenu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #444;
+      padding: 10px 0;
+      list-style: none;
+      min-width: 180px;
+      z-index: 1000;
+      border-radius: 5px;
+    }
+
+    .dropdown:hover .submenu {
+      display: block;
+    }
+
+    .submenu li {
+      padding: 5px 20px;
+    }
+
+    .submenu li a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .submenu li a:hover {
+      text-decoration: underline;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid orange;
+      margin: 15px auto -5px auto;
+      width: 90%;
+      margin-top: -30px;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Ez a referenciák aloldal</h1>
-  <p>Ide jöhet bővebb leírás a termékkörről, kínálatról stb.</p>
-  <a href="/">Vissza a főoldalra</a>
+  <!-- Spinner -->
+  <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
+
+  <!-- Header with Logo + Nav -->
+  <header>
+    <div class="logo">
+      <img src="asd.png" alt="Révai Fruit KFT." href="https://revaifruitkft.hu/">
+    </div>
+    <hr>
+    <nav>
+      <ul class="menu">
+        <li><a href="https://revaifruitkft.hu/">KEZDŐLAP</a></li>
+        <li><a href="https://revaifruitkft.hu/tisztitott">TISZTÍTOTT ZÖLDSÉGEK</a></li>
+        <li><a href="https://revaifruitkft.hu/termeklista">TERMÉKLISTA</a></li>
+        <li><a href="https://revaifruitkft.hu/referenciak">REFERENCIÁK</a></li>
+        <li><a href="https://revaifruitkft.hu/kapcsolat">KAPCSOLAT</a></li>
+        <li><a href="https://revaifruitkft.hu/galeria">GALÉRIA</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
+
+  <!-- Blog Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <h1 class="display-5 mb-3">PARTNEREINK</h1>
+                <p>Cégünk büszke arra, hogy hosszú távú, megbízható együttműködést alakított ki számos partnerrel. Minőségi termékeinkkel és rugalmas szolgáltatásainkkal nap mint nap hozzájárulunk ügyfeleink sikereihez. Az alábbiakban egy válogatást láthat legfontosabb üzleti partnereink közül.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <img class="img-fluid" src="refkep/borimamibarna.png" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">Bori Mami Gyöngyös</a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <img class="img-fluid" src="refkep/prteka.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">Portéka Gyöngyös</a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/opal.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">Hotel OpálSuperior</a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/magy.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">Mátrai Gyógyintézet Mátraháza</a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/gyongyosi-karoly-robert-campus.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">Magyar Agrár- és Élettudományi Egyetem Károly Róbert Campus (MATE) - Gyöngyös</a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/au.webp" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">Autista Segítő Központ - Gyöngyös</a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/vir.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">Villa Rosa Idősek Otthona - Gyöngyös és Mátrafüred</a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/4seasons.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">4 Seasons - Palóc Bistorant  </a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/fruedpizza.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">Füred Pizza</a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/tornyos.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">Tornyos Panzió és Étterem Mátrafüred</a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/hegyihot.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">4 Évszak Hegyihotel</a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/ref.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">Mátraháza Református Üdülő</a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/vendeg.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">Kékesi vendégház</a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/corso.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">Corso Önkiszolgáló Étterem  </a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/fahrj.png" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">Fahéj bisztró</a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/teto.webp" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">Tető Étterem Kékestető</a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/rozsa.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">Rózsaszentmártoni Labdarózsa Óvoda</a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/szucsi.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">Szűcsi Óvoda</a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/pata.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">Gyöngyöspatai Bokréta Óvoda és Bölcsőde</a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/lacantina.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">La Cantina Pizzéria</a>
+                        <div class="text-muted border-top pt-4">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid" src="refkep/tarjan.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <a class="d-block h5 lh-base mb-4" href="">Mosolyfalva Óvoda és Családi Bölcsőde - Gyöngyöstarján</a>
+                        <div class="text-muted border-top pt-4">    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Blog End -->
+
+<style>
+    /* Szülő sor legyen rugalmas magasságú */
+.row.g-4 > [class*="col-"] {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Kép magasság fix, arány megtartva */
+.row.g-4 img {
+    width: 100%;
+    height: 200px; /* Állíthatod pl. 220px-re is */
+    object-fit: cover; /* ne torzuljon, csak levágjon */
+    border-radius: 5px 5px 0 0; /* szép lekerekítés felül */
+}
+
+/* Szöveges rész nyújtózkodjon egyforma magasságig */
+.row.g-4 .bg-light {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Mobilbarát – kisebb képmagasság telefonon */
+@media (max-width: 576px) {
+    .row.g-4 img {
+        height: 150px;
+    }
+}
+
+</style>
+
+    <!-- Testimonial Start -->
+    <div class="container-fluid bg-light bg-icon py-6 mb-5">
+        <div class="container">
+            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <h1 class="display-5 mb-3">RÓLUNK MONDTÁK</h1>
+                <p>Partnereink és ügyfeleink visszajelzései megerősítenek bennünket abban, hogy a minőség, a megbízhatóság és a rugalmasság mindig megtérül. Köszönjük bizalmukat és elismerő szavaikat.</p>
+            </div>
+            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+                <div class="testimonial-item position-relative bg-white p-5 mt-4">
+                    <i class="fa fa-quote-left fa-3x text-primary position-absolute top-0 start-0 mt-n4 ms-5"></i>
+                    <p class="mb-4">A szállítás határidőben megtörténik, az áru minősége kiváló, minden esetben friss, szépen szortírozott zöldséget-gyümölcsöt kapok.</p>
+                    <div class="d-flex align-items-center">
+                        <img class="flex-shrink-0 rounded-circle" src="img/testimonial-1.jpg" alt="">
+                        <div class="ms-3">
+                            <h5 class="mb-1">Kása Cecília</h5>
+                            <span>élelmezésvezető<br>
+Gyöngyöspata Bokréta Óvoda és Bölcsőde</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-item position-relative bg-white p-5 mt-4">
+                    <i class="fa fa-quote-left fa-3x text-primary position-absolute top-0 start-0 mt-n4 ms-5"></i>
+                    <p class="mb-4">Séfjeink által megálmodott gasztronómiai költemények esetében, nincs olyan alapanyag, amit Gábor nem tud beszerezni, s természetesen a minőségi ismérvek minden esetben előtérbe kerülnek.</p>
+                    <div class="d-flex align-items-center">
+                        <img class="flex-shrink-0 rounded-circle" src="img/testimonial-2.jpg" alt="">
+                        <div class="ms-3">
+                            <h5 class="mb-1">Sándor Béla</h5>
+                            <span>tulajdonos, üzletvezető<br>
+Bori Mami Étterem Gyöngyös</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-item position-relative bg-white p-5 mt-4">
+                    <i class="fa fa-quote-left fa-3x text-primary position-absolute top-0 start-0 mt-n4 ms-5"></i>
+                    <p class="mb-4">A Révai Fruit Kft. zöldség-gyümölcs beszállítónk esetében megtaláltuk az általunk elvárt minőséget, s mindehez, gyors kiszállítás, rugalmas problémakezelés, s korrekt partneri hozzáállás társul.  </p>
+                    <div class="d-flex align-items-center">
+                        <img class="flex-shrink-0 rounded-circle" src="img/testimonial-3.jpg" alt="">
+                        <div class="ms-3">
+                            <h5 class="mb-1">Benyik András</h5>
+                            <span>séf<br>
+Hotel Opál*** Superior</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-item position-relative bg-white p-5 mt-4">
+                    <i class="fa fa-quote-left fa-3x text-primary position-absolute top-0 start-0 mt-n4 ms-5"></i>
+                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
+                    <div class="d-flex align-items-center">
+                        <img class="flex-shrink-0 rounded-circle" src="img/testimonial-4.jpg" alt="">
+                        <div class="ms-3">
+                            <h5 class="mb-1">Client Name</h5>
+                            <span>Profession</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Testimonial End -->
+
+
+    
+
+
+    
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
 </body>
+
 </html>
