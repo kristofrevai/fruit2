@@ -10,10 +10,10 @@
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="favicon.svg" />
-<link rel="shortcut icon" href="favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-<link rel="manifest" href="site.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,7 +35,7 @@
   <link href="css/style.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
 
-  <!-- Custom Navigation Styles -->
+  <!-- Custom Navigation + Product Styles -->
   <style>
     header {
       text-align: center;
@@ -135,6 +135,33 @@
       width: 90%;
       margin-top: -30px;
     }
+
+    /* Search */
+    .search-wrap { margin-bottom: 30px; }
+    .search-input-group { position:relative; max-width: 420px; }
+    .search-input-group .fa-magnifying-glass { position:absolute; left:16px; top:50%; transform:translateY(-50%); color:#aaa; font-size:15px; }
+    #product-search { padding:11px 16px 11px 42px; border:1px solid #ddd; border-radius:50px; font-size:15px; width:100%; outline:none; font-family:'Raleway',sans-serif; transition:border-color 0.2s; }
+    #product-search:focus { border-color:#ff7a18; }
+    #search-clear { position:absolute; right:14px; top:50%; transform:translateY(-50%); background:none; border:none; color:#bbb; cursor:pointer; display:none; font-size:16px; }
+    #search-clear.visible { display:block; }
+
+    /* Subcategory header */
+    .subcat-header { font-family:'Raleway',sans-serif; text-transform:uppercase; letter-spacing:2px; font-size:12px; font-weight:700; color:#aaa; margin:32px 0 16px 0; padding-bottom:8px; border-bottom:1px solid #f0f0f0; width:100%; }
+    .subcat-header:first-child { margin-top:0; }
+
+    /* Search results */
+    #search-results { display:none; }
+    #search-results .result-cat-badge { display:inline-block; font-size:11px; background:#fff3e6; color:#ff7a18; border-radius:50px; padding:2px 10px; margin-bottom:8px; font-weight:600; letter-spacing:0.5px; }
+    .no-results { text-align:center; padding:50px 0; color:#aaa; font-size:16px; }
+
+    /* Product cards */
+    .product-item { border:1px solid #eee; border-radius:10px; overflow:hidden; background:#fff; transition:box-shadow 0.2s; }
+    .product-item:hover { box-shadow:0 6px 18px rgba(0,0,0,0.08); }
+    .product-item .position-relative { height:200px; }
+    .product-item .position-relative img { width:100%; height:100%; object-fit:contain; object-position:center; display:block; padding:8px; box-sizing:border-box; }
+    .product-item .text-center.p-4 { display:flex; flex-direction:column; flex:1; padding:1.25rem !important; }
+    .product-item .h5 { font-size:16px; min-height:44px; display:flex; align-items:center; justify-content:center; line-height:1.3; }
+    .product-item .unit-label { color:#888; font-size:14px; margin-top:auto; }
   </style>
 </head>
 
@@ -162,1201 +189,414 @@
     </nav>
   </header>
 
+  <!-- Product Start -->
+  <div class="container-xxl py-5">
+    <div class="container">
+      <div class="row g-0 gx-5 align-items-end">
+        <div class="col-lg-6">
+          <div class="section-header text-start mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <h1 class="display-5 mb-3">Terméklista</h1>
+            <p>Fedezze fel friss zöldségeink és gyümölcseink széles választékát! Kínálatunkban megtalálhatók a legkeresettebb alapanyagok, szezonális különlegességek és előkészített termékek is – minden igényre, egy helyen.</p>
+          </div>
+        </div>
+      </div>
 
+      <!-- Search -->
+      <div class="search-wrap wow fadeInUp" data-wow-delay="0.1s">
+        <div class="search-input-group">
+          <i class="fa fa-magnifying-glass"></i>
+          <input type="text" id="product-search" placeholder="Keressen terméket... (pl. paprika, alma)">
+          <button id="search-clear" onclick="clearSearch()"><i class="fa fa-xmark"></i></button>
+        </div>
+      </div>
 
+      <!-- Search results (shown when typing) -->
+      <div id="search-results">
+        <div class="row g-4" id="search-grid"></div>
+        <div class="no-results" id="search-no-results" style="display:none;">Nem található ilyen termék.</div>
+      </div>
 
-
-    <!-- Product Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="row g-0 gx-5 align-items-end">
-                <div class="col-lg-6">
-                    <div class="section-header text-start mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                        <h1 class="display-5 mb-3">Terméklista</h1>
-                        <p>Fedezze fel friss zöldségeink és gyümölcseink széles választékát! Kínálatunkban megtalálhatók a legkeresettebb alapanyagok, szezonális különlegességek és előkészített termékek is – minden igényre, egy helyen.</p>
-                    </div>
-                </div>
-                <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
-    <ul class="nav nav-pills d-inline-flex flex-wrap justify-content-end mb-5">
-        <li class="nav-item me-2 mb-2">
-            <a class="btn btn-outline-primary border-2 active" data-bs-toggle="pill" href="#tab-1">Zöldségek</a>
-        </li>
-        <li class="nav-item me-2 mb-2">
-            <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-2">Gyümölcsök</a>
-        </li>
-        <li class="nav-item me-2 mb-2">
-            <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-3">Friss fűszerek, csírák</a>
-        </li>
-        <li class="nav-item me-2 mb-2">
-            <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-4">Savanyúságok</a>
-        </li>
-        <li class="nav-item me-2 mb-2">
-            <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-5">Saláták</a>
-        </li>
-        <li class="nav-item me-2 mb-2">
-            <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-6">Tojás</a>
-        </li>
-    </ul>
-</div>
-
-            </div>
-            <div class="tab-content">
-                <div id="tab-1" class="tab-pane fade show p-0 active">
-  <div class="row g-4">
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.1s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/burgonya.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Burgonya</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.3s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/sargaburgonya.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Burgonya sárga</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.5s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/parazs.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Burgonya parázs</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/csicsoka.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Csicsóka</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.1s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/edesburg.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Édes burgonya</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.3s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/gomba.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Gomba Csiperke</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.5s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/voroshagyma.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Vöröshagyma</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/foki.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Fokhagyma</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/lilali.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Lilahagyma</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/pore.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Póréhagyma</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/Broccoli.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Brokkoli</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/fejeskapi.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Fejes káposzta</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/karal.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Karalábé</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/karfiol.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Karfiol</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/kelkapi.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Kelkáposzta</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/lilakapi.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Lila káposzta</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/Pak-choi.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Pak-choi</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/tv.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Tv paprika</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/eros.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Hegyes erős (extra)</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/tricolor.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Kaliforniai paprika (Tricolor)</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/kapia.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Kápia</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/pari.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Paradicsom</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/koktel.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Koktélparadicsom</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/baby-spinach.png" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Bébi Spenót</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/repa.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Sárgarépa</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/gyoker.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Petrezselyem Gyökér</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/cekla.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Cékla</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/pirosretek.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Piros retek</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/kigyo.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Kígyó uborka</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/furtosubi.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Fürtös uborka</a>
-          <span class="text-dark me-1">Zöldség</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-      <div class="product-item d-flex flex-column w-100 h-100">
-        <div class="position-relative bg-light overflow-hidden">
-          <img class="img-fluid w-100" src="zold/zeller.jpg" alt="">
-        </div>
-        <div class="text-center p-4 mt-auto">
-          <a class="d-block h5 mb-2" href="">Zellergumó</a>
-          <span class="text-dark me-1">Zöldség</span>
+      <!-- Normal tab view -->
+      <div id="tab-view">
+        <ul class="nav nav-pills d-inline-flex flex-wrap mb-5 wow slideInRight" data-wow-delay="0.1s">
+          <li class="nav-item me-2 mb-2"><a class="btn btn-outline-primary border-2 active" data-bs-toggle="pill" href="#tab-1">Zöldségek</a></li>
+          <li class="nav-item me-2 mb-2"><a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-2">Gyümölcsök</a></li>
+          <li class="nav-item me-2 mb-2"><a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-3">Fűszerek, csírák</a></li>
+          <li class="nav-item me-2 mb-2"><a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-4">Savanyúságok</a></li>
+          <li class="nav-item me-2 mb-2"><a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-5">Saláták</a></li>
+          <li class="nav-item me-2 mb-2"><a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-6">Tisztított zöldségek</a></li>
+          <li class="nav-item me-2 mb-2"><a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-7">Tojás</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="tab-1" class="tab-pane fade show p-0 active"><div id="grid-zoldseg"></div></div>
+          <div id="tab-2" class="tab-pane fade show p-0"><div id="grid-gyumolcs"></div></div>
+          <div id="tab-3" class="tab-pane fade show p-0"><div id="grid-fuszer"></div></div>
+          <div id="tab-4" class="tab-pane fade show p-0"><div id="grid-savanyu"></div></div>
+          <div id="tab-5" class="tab-pane fade show p-0"><div id="grid-salatak"></div></div>
+          <div id="tab-6" class="tab-pane fade show p-0"><div id="grid-tisztitott"></div></div>
+          <div id="tab-7" class="tab-pane fade show p-0"><div id="grid-tojas"></div></div>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-                <div id="tab-2" class="tab-pane fade show p-0">
-                    <div class="row g-4">
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/gala.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Alma Gála</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/golden.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Alma Golden</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/grany.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Alma Grany Smith</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/ida.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Alma Idared</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/ana.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Ananász</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/avo.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Avokádó</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/afonya.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Áfonya</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/banan.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Banán</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/citrom.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Citrom</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/eper.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Eper</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/gorogd.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Görög dinnye</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/granat.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Gránátalma</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/grapefruit.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Grapefruit</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/kiwi.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Kiwi</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/korte.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Körte</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/lime.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Lime</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/malna.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Málna</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/mandi.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Mandarin</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/nari.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Narancs</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/neki.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Nektarin</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/sargadi.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Sárgadinnye</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="gyum/szolo.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Szőlő</a>
-                                    <span class="text-dark me-1">Gyümölcs</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="tab-3" class="tab-pane fade show p-0">
-                    <div class="row g-4">
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="csir/retekcsira.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Retek csíra</a>
-                                    <span class="text-dark me-1">Csíra</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                         <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="csir/bazsi.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Bazsalikom </a>
-                                    <span class="text-dark me-1">Fűszer</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="csir/citromfu.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Citromfű</a>
-                                    <span class="text-dark me-1">Fűszer</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="csir/peti.png" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Petrezselyem zöldje</a>
-                                    <span class="text-dark me-1">Fűszer</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="csir/gyombi.png" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Gyömbér</a>
-                                    <span class="text-dark me-1">Fűszer</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="csir/kakukk.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Kakukkfű</a>
-                                    <span class="text-dark me-1">Fűszer</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="csir/kapor.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Kapor</a>
-                                    <span class="text-dark me-1">Fűszer</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="csir/kori.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Koriander </a>
-                                    <span class="text-dark me-1">Fűszer</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="csir/major.png" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Majoranna</a>
-                                    <span class="text-dark me-1">Fűszer</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="csir/menta.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Menta</a>
-                                    <span class="text-dark me-1">Fűszer</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="csir/oreagano.png" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Oregáno</a>
-                                    <span class="text-dark me-1">Fűszer</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="csir/rozi.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Rozmaring</a>
-                                    <span class="text-dark me-1">Fűszer</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="csir/snid.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Snidling</a>
-                                    <span class="text-dark me-1">Fűszer</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="csir/takony.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Tárkony</a>
-                                    <span class="text-dark me-1">Fűszer</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
-      <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="csir/turbi.jpg" alt="">
-                                    
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Turbolya</a>
-                                    <span class="text-dark me-1">Fűszer</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        
-                    </div>
-                    
-                </div>
-                <div id="tab-4" class="tab-pane fade show p-0">
-                    <div class="row g-4">
-                        <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="product-item">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sav/simalmapap.webp" alt="">
-                                </div>
-                                <div class="text-center p-4">
-                                    <a class="d-block h5 mb-2" href="">Almapaprika</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="product-item">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sav/cekla.webp" alt="">
-                                </div>
-                                <div class="text-center p-4">
-                                    <a class="d-block h5 mb-2" href="">Cékla</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="product-item">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sav/csala.webp" alt="">
-                                </div>
-                                <div class="text-center p-4">
-                                    <a class="d-block h5 mb-2" href="">Csalamádé</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="product-item">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sav/csem.webp" alt="">
-                                </div>
-                                <div class="text-center p-4">
-                                    <a class="d-block h5 mb-2" href="">Csemege uborka</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="product-item">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sav/kovi.webp" alt="">
-                                </div>
-                                <div class="text-center p-4">
-                                    <a class="d-block h5 mb-2" href="">Kovászos uborka</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="product-item">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sav/savkap.webp" alt="">
-                                </div>
-                                <div class="text-center p-4">
-                                    <a class="d-block h5 mb-2" href="">Savanyú Káposzta</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="product-item">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sav/almapap.webp" alt="">
-                                </div>
-                                <div class="text-center p-4">
-                                    <a class="d-block h5 mb-2" href="">Töltött almapaprika</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="product-item">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sav/toltottpap.webp" alt="">
-                                </div>
-                                <div class="text-center p-4">
-                                    <a class="d-block h5 mb-2" href="">Töltött paprika</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="product-item">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sav/vegyees.webp" alt="">
-                                </div>
-                                <div class="text-center p-4">
-                                    <a class="d-block h5 mb-2" href="">Vegyes Darabos</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="product-item">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sav/gyongy.jpg" alt="">
-                                </div>
-                                <div class="text-center p-4">
-                                    <a class="d-block h5 mb-2" href="">Gyöngyhagyma</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TAB 5: Saláták -->
-                <div id="tab-5" class="tab-pane fade show p-0">
-                    <div class="row g-4">
-                        
-                        <!-- Jégsaláta -->
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sals/jeg.jpg" alt="Jégsaláta">
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Jégsaláta</a>
-                                    <span class="text-dark me-1">Saláta</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sals/fejes.jpg" alt="Jégsaláta">
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Fejes saláta</a>
-                                    <span class="text-dark me-1">Saláta</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Madársaláta -->
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.3s">
-                            <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sals/madar.jpg" alt="Madársaláta">
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Madársaláta</a>
-                                    <span class="text-dark me-1">Saláta</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Rukkola -->
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.5s">
-                            <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sals/rukkola.jpg" alt="Rukkola">
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Rukkola</a>
-                                    <span class="text-dark me-1">Saláta</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Céklalevél -->
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-                            <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sals/cekla.jpg" alt="Céklalevél">
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Céklalevél</a>
-                                    <span class="text-dark me-1">Saláta</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Mix saláta -->
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sals/mix.jpg" alt="Mix saláta">
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Mix saláta</a>
-                                    <span class="text-dark me-1">Saláta</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Bébi spenót -->
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.3s">
-                            <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sals/bebispenot.jpg" alt="Bébi spenót">
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Bébi spenót</a>
-                                    <span class="text-dark me-1">Saláta</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Római saláta -->
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.5s">
-                            <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sals/romaisalata.jpg" alt="Római saláta">
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Római saláta</a>
-                                    <span class="text-dark me-1">Saláta</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Bébi római saláta -->
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.7s">
-                            <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sals/bebiromai.jpg" alt="Bébi római saláta">
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Bébi római saláta</a>
-                                    <span class="text-dark me-1">Saláta</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Radicchio -->
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sals/radicchio.jpg" alt="Radicchio">
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Radicchio</a>
-                                    <span class="text-dark me-1">Saláta</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Édeskömény -->
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.3s">
-                            <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="sals/edeskomeny.png" alt="Édeskömény">
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Édeskömény</a>
-                                    <span class="text-dark me-1">Saláta</span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div id="tab-6" class="tab-pane fade show p-0">
-                    <div class="row g-4">
-                        <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="product-item">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="tojas/talca30.jpg" alt="Friss Tojás">
-                                </div>
-                                <div class="text-center p-4">
-                                    <a class="d-block h5 mb-2" href="">Friss Tojás (M-es) 30db</a>
-                                    <span class="text-dark me-1">Tojás</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch wow fadeInUp" data-wow-delay="0.3s">
-                            <div class="product-item d-flex flex-column w-100 h-100">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100" src="tojas/furj.jpg" alt="Édeskömény">
-                                </div>
-                                <div class="text-center p-4 mt-auto">
-                                    <a class="d-block h5 mb-2" href="">Fürjtojás 24db</a>
-                                    <span class="text-dark me-1">Tojás</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div> </div> </div>
-    <!-- Product End -->
+  <!-- Product End -->
 
 
-    <!-- Firm Visit Start -->
-    <div class="container-fluid bg-primary bg-icon mt-5 py-6">
-        <div class="container">
-            <div class="row g-5 align-items-center">
-                <div class="col-md-7 wow fadeIn" data-wow-delay="0.1s">
-                    <h1 class="display-5 text-white mb-3">Látogassa meg tisztított termékeinket</h1>
-                    <p class="text-white mb-0">Tisztított termékeink frissek, gondosan válogatottak és megbízhatóak. Fontos számunkra, hogy vásárlóink kiváló minőségű, előkészített árut kapjanak – egyszerűbbé téve ezzel a mindennapi konyhai munkát.</p>
-                </div>
-                <div class="col-md-5 text-md-end wow fadeIn" data-wow-delay="0.5s">
-                    <a class="btn btn-lg btn-secondary rounded-pill py-3 px-5" href="https://revaifruitkft.hu/tisztitott">Megnyitás</a>
-                </div>
-            </div>
+  <!-- Firm Visit Start -->
+  <div class="container-fluid bg-primary bg-icon mt-5 py-6">
+    <div class="container">
+      <div class="row g-5 align-items-center">
+        <div class="col-md-7 wow fadeIn" data-wow-delay="0.1s">
+          <h1 class="display-5 text-white mb-3">Látogassa meg tisztított termékeinket</h1>
+          <p class="text-white mb-0">Tisztított termékeink frissek, gondosan válogatottak és megbízhatóak. Fontos számunkra, hogy vásárlóink kiváló minőségű, előkészített árut kapjanak – egyszerűbbé téve ezzel a mindennapi konyhai munkát.</p>
         </div>
+        <div class="col-md-5 text-md-end wow fadeIn" data-wow-delay="0.5s">
+          <a class="btn btn-lg btn-secondary rounded-pill py-3 px-5" href="https://revaifruitkft.hu/tisztitott">Megnyitás</a>
+        </div>
+      </div>
     </div>
-    <!-- Firm Visit End -->
+  </div>
+  <!-- Firm Visit End -->
 
 
-    
+  <!-- Back to Top -->
+  <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
 
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/wow/wow.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/waypoints/waypoints.min.js"></script>
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
+  <!-- Template Javascript -->
+  <script src="js/main.js"></script>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <script>
+  // ─── TERMÉKADATOK csoportosítva ───────────────────────────────────────────
+  const CATALOG = [
+    {
+      id: "zoldseg", label: "Zöldségek", gridId: "grid-zoldseg",
+      groups: [
+        { label: "Burgonyafélék", items: [
+          { id:"burgonya",       name:"Burgonya",        img:"zold/burgonya.jpg",       unit:"kg" },
+          { id:"sargaburgonya",  name:"Burgonya sárga",  img:"zold/sargaburgonya.jpg",  unit:"kg" },
+          { id:"parazs",         name:"Burgonya parázs", img:"zold/parazs.jpg",         unit:"kg" },
+          { id:"edesburg",       name:"Édes burgonya",   img:"zold/edesburg.jpg",       unit:"kg" }
+        ]},
+        { label: "Hagymafélék", items: [
+          { id:"voroshagyma",    name:"Vöröshagyma",     img:"zold/voroshagyma.jpg",    unit:"kg" },
+          { id:"foki",           name:"Fokhagyma",       img:"zold/foki.jpg",           unit:"kg" },
+          { id:"lilali",         name:"Lilahagyma",      img:"zold/lilali.jpg",         unit:"kg" },
+          { id:"pore",           name:"Póréhagyma",      img:"zold/pore.jpg",           unit:"db" },
+          { id:"feherhagyma",    name:"Fehérhagyma",     img:"zold/feherhagyma.jpg",    unit:"kg" },
+          { id:"ujhagyma",       name:"Újhagyma",        img:"zold/ujhagyma.jpg",       unit:"csomó" }
+        ]},
+        { label: "Káposztafélék", items: [
+          { id:"Broccoli",       name:"Brokkoli",              img:"zold/Broccoli.jpg",      unit:"kg" },
+          { id:"fejeskapi",      name:"Fejes káposzta",        img:"zold/fejeskapi.jpg",     unit:"kg" },
+          { id:"karal",          name:"Karalábé",              img:"zold/karal.jpg",         unit:"db" },
+          { id:"karfiol",        name:"Karfiol",               img:"zold/karfiol.jpg",       unit:"kg" },
+          { id:"kelkapi",        name:"Kelkáposzta",           img:"zold/kelkapi.jpg",       unit:"kg" },
+          { id:"lilakapi",       name:"Lila káposzta",         img:"zold/lilakapi.jpg",      unit:"kg" },
+          { id:"Pak-choi",       name:"Pak-choi",              img:"zold/Pak-choi.jpg",      unit:"kg" }
+        ]},
+        { label: "Paprikafélek", items: [
+          { id:"tv",             name:"Tv paprika",                    img:"zold/tv.jpg",       unit:"kg" },
+          { id:"eros",           name:"Hegyes erős (extra)",           img:"zold/eros.jpg",     unit:"db" },
+          { id:"tricolor",       name:"Kaliforniai paprika (Tricolor)",img:"zold/tricolor.jpg", unit:"kg" },
+          { id:"kalif",          name:"Kaliforniai paprika (Piros)",   img:"zold/kalif.jpg",    unit:"kg" },
+          { id:"chili",          name:"Chili paprika",                 img:"zold/chili.jpg",    unit:"kg" },
+          { id:"kapia",          name:"Kápia",                         img:"zold/kapia.jpg",    unit:"kg" }
+        ]},
+        { label: "Paradicsomfélék", items: [
+          { id:"pari",           name:"Paradicsom",       img:"zold/pari.jpg",   unit:"kg" },
+          { id:"koktel",         name:"Koktélparadicsom", img:"zold/koktel.jpg", unit:"kg" },
+          { id:"sargakoktel",    name:"Koktélparadicsom sárga", img:"zold/sargakoktel.jpg", unit:"kg" }
+        ]},
+        { label: "Gyökérzöldségek", items: [
+          { id:"repa",           name:"Sárgarépa",          img:"zold/repa.jpg",          unit:"kg" },
+          { id:"gyoker",         name:"Petrezselyem Gyökér",img:"zold/gyoker.jpg",        unit:"kg" },
+          { id:"cekla-z",        name:"Cékla",              img:"zold/cekla.jpg",         unit:"kg" },
+          { id:"pirosretek",     name:"Piros retek",        img:"zold/pirosretek.jpg",    unit:"csomó" },
+          { id:"zellergumo",     name:"Zellergumó",         img:"zold/zellergumo.jpg",    unit:"kg" },
+          { id:"angolzeller",    name:"Angol zeller",       img:"zold/angolzeller.jpg",   unit:"csomag" },
+          { id:"jegcsap",        name:"Jégcsapretek",       img:"zold/jegcsap.jpg",       unit:"kg" }
+        ]},
+        { label: "Tökfélék", items: [
+          { id:"kigyo",          name:"Kígyó uborka", img:"zold/kigyo.jpg",     unit:"kg" },
+          { id:"furtosubi",      name:"Fürtös uborka",img:"zold/furtosubi.jpg", unit:"kg" },
+          { id:"cukkini",        name:"Cukkini",img:"zold/cukkini.jpg", unit:"kg" },
+          { id:"sutotok",        name:"Sütőtök",img:"zold/sutotok.jpg", unit:"kg" },
+          { id:"fozotok",        name:"Főzőtök",img:"zold/fozo.jpg", unit:"kg" },
+          { id:"padlizsan",      name:"Padlizsán",img:"zold/padlizsan.jpg", unit:"kg" }
+        ]},
+        { label: "Gombák", items: [
+          { id:"gomba",          name:"Gomba Csiperke", img:"zold/gomba.jpg",        unit:"0,5 kg/csomag" },
+          { id:"barnagomba",     name:"Barna Csiperke", img:"zold/barnacsiperke.jpg",unit:"0,5 kg/csomag" },
+          { id:"laska",          name:"Laskagomba", img:"zold/laska.jpg",        unit:"0,5 kg/csomag" },
+          { id:"shimei",         name:"Shimei fehér", img:"zold/shimeji.jpg",        unit:"150 g/csomag" },
+          { id:"shimeibarna",    name:"Shimei barna", img:"zold/barnashimeji.jpeg",  unit:"150 g/csomag" },
+          { id:"ordog",          name:"Ördögszekér gomba", img:"zold/ordog.jpg",        unit:"2 kg/csomag" },
+          { id:"shitake",        name:"Shiitake gomba", img:"zold/shitake.jpg",        unit:"0,5 kg/csomag" }
+        ]}
+      ]
+    },
+    {
+      id: "gyumolcs", label: "Gyümölcsök", gridId: "grid-gyumolcs",
+      groups: [
+        { label: "Almafélék", items: [
+          { id:"gala",   name:"Alma apró/iskolás", img:"gyum/gala.jpg",  unit:"kg" },
+          { id:"golden", name:"Alma Golden",       img:"gyum/golden.jpg",unit:"kg" },
+          { id:"grany",  name:"Alma Grany Smith",  img:"gyum/grany.jpg", unit:"kg" },
+          { id:"ida",    name:"Alma Idared",       img:"gyum/ida.jpg",   unit:"kg" }
+        ]},
+        { label: "Citrusfélék", items: [
+          { id:"citrom",      name:"Citrom",    img:"gyum/citrom.jpg", unit:"kg" },
+          { id:"grapefruit",  name:"Grapefruit",img:"gyum/grapefruit.jpg",unit:"kg" },
+          { id:"lime",        name:"Lime",      img:"gyum/lime.jpg",   unit:"kg" },
+          { id:"mandi",       name:"Mandarin",  img:"gyum/mandi.jpg",  unit:"kg" },
+          { id:"nari",        name:"Narancs",   img:"gyum/nari.jpg",   unit:"kg" }
+        ]},
+        { label: "Bogyósok", items: [
+          { id:"afonya", name:"Áfonya", img:"gyum/afonya.jpg", unit:"125g/doboz" },
+          { id:"eper",   name:"Eper",   img:"gyum/eper.jpg",   unit:"kg" },
+          { id:"malna",  name:"Málna",  img:"gyum/malna.jpg",  unit:"125g/doboz" },
+          { id:"ribizli",name:"Ribizli",img:"gyum/ribizli.jpg",unit:"125g/doboz" }
+        ]},
+        { label: "Dinnyék", items: [
+          { id:"gorogd",  name:"Görög dinnye", img:"gyum/gorogd.jpg",  unit:"kg" },
+          { id:"sargadi", name:"Sárgadinnye",  img:"gyum/sargadi.jpg", unit:"kg" }
+        ]},
+        { label: "Trópusi gyümölcsök", items: [
+          { id:"ana",       name:"Ananász", img:"gyum/ana.jpg", unit:"db" },
+          { id:"avo",       name:"Avokádó", img:"gyum/avo.jpg", unit:"db" },
+          { id:"hassavo",   name:"Avokádó Haas (konyhakész)", img:"gyum/hassavo.jpg", unit:"db" },
+          { id:"banan",     name:"Banán",   img:"gyum/banan.jpg",unit:"kg" },
+          { id:"kiwi",      name:"Kiwi",    img:"gyum/kiwi.jpg", unit:"kg" },
+          { id:"passion",   name:"Passion Fruit",   img:"gyum/passion.jpg",   unit:"kg" },
+          { id:"mangó",     name:"Mangó",   img:"gyum/mango.jpg",   unit:"db" },
+          { id:"karambola", name:"Karambola",   img:"gyum/karambola.jpg",   unit:"db" }
+        ]},
+        { label: "Egyéb gyümölcsök", items: [
+          { id:"granat", name:"Gránátalma",img:"gyum/granat.jpg",unit:"db" },
+          { id:"korte",  name:"Körte",    img:"gyum/korte.jpg", unit:"kg" },
+          { id:"neki",   name:"Nektarin", img:"gyum/neki.jpg",  unit:"kg" },
+          { id:"oszi",   name:"Őszibarack", img:"gyum/oszi.jpg",  unit:"kg" },
+          { id:"sargab", name:"Sárgabarack", img:"gyum/sargab.jpg",  unit:"kg" },
+          { id:"szolo",  name:"Szőlő",   img:"gyum/szolo.jpg", unit:"kg" },
+          { id:"szilva", name:"Szilva",   img:"gyum/szilva.jpg", unit:"kg" }
+        ]}
+      ]
+    },
+    {
+      id: "fuszer", label: "Fűszerek, csírák", gridId: "grid-fuszer",
+      groups: [
+        { label: "Csírák", items: [
+          { id:"retekcsira", name:"Retek csíra", img:"csir/retekcsira.jpg", unit:"doboz" },
+          { id:"hagymacsira", name:"Hagyma csíra", img:"csir/hagymacsira.png", unit:"doboz" },
+          { id:"borsocsira", name:"Borsó hajtás csíra", img:"csir/borsocsira.jpg", unit:"doboz" }
+        ]},
+        { label: "Friss fűszerek", items: [
+          { id:"bazsi",    name:"Bazsalikom",         img:"csir/bazsi.jpg",    unit:"köteg" },
+          { id:"gyombi",   name:"Gyömbér",            img:"csir/gyombi.png",   unit:"kg" },
+          { id:"kakukk",   name:"Kakukkfű",           img:"csir/kakukk.jpg",   unit:"köteg" },
+          { id:"kapor",    name:"Kapor",              img:"csir/kapor.jpg",    unit:"köteg" },
+          { id:"kori",     name:"Koriander",          img:"csir/kori.jpg",     unit:"köteg" },
+          { id:"menta",    name:"Menta",              img:"csir/menta.jpg",    unit:"köteg" },
+          { id:"peti",     name:"Petrezselyem zöldje",img:"csir/peti.png",     unit:"köteg" },
+          { id:"rozi",     name:"Rozmaring",          img:"csir/rozi.jpg",     unit:"köteg" },
+          { id:"snid",     name:"Snidling",           img:"csir/snid.jpg",     unit:"köteg" },
+          { id:"takony",   name:"Tárkony",            img:"csir/takony.jpg",   unit:"köteg" },
+          { id:"turbi",    name:"Turbolya",           img:"csir/turbi.jpg",    unit:"köteg" },
+          { id:"zsalya",   name:"Zsálya",             img:"csir/zsalya.jpg",   unit:"köteg" }
+        ]}
+      ]
+    },
+    {
+      id: "savanyu", label: "Savanyúságok", gridId: "grid-savanyu",
+      groups: [
+        { label: "Paprikák", items: [
+          { id:"simalmapap",  name:"Almapaprika",         img:"sav/simalmapap.webp", unit:"5 / 10 kg" },
+          { id:"almapap",     name:"Töltött almapaprika", img:"sav/almapap.webp",    unit:"5 / 10 kg" },
+          { id:"toltottpap",  name:"Töltött paprika",     img:"sav/toltottpap.webp", unit:"5 / 10 kg" }
+        ]},
+        { label: "Uborkák", items: [
+          { id:"csem", name:"Csemege uborka", img:"sav/csem.webp", unit:"5 / 10 kg" },
+          { id:"kovi", name:"Kovászos uborka",img:"sav/kovi.webp", unit:"5 / 10 kg" }
+        ]},
+        { label: "Káposztafélék", items: [
+          { id:"csala",  name:"Csalamádé",       img:"sav/csala.webp",  unit:"5 / 15 kg" },
+          { id:"savkap", name:"Savanyú Káposzta",img:"sav/savkap.webp", unit:"1 / 5 / 17 kg" }
+        ]},
+        { label: "Egyéb", items: [
+          { id:"cekla-s",  name:"Cékla",         img:"sav/cekla.webp",  unit:"5 / 15 kg" },
+          { id:"gyongy",   name:"Gyöngyhagyma",  img:"sav/gyongy.jpg",  unit:"5 / 10 kg" }
+        ]}
+      ]
+    },
+    {
+      id: "salatak", label: "Saláták", gridId: "grid-salatak",
+      groups: [
+        { label: "Saláták", items: [
+          { id:"jegsalata",  name:"Jégsaláta",       img:"sals/jeg.jpg",          unit:"db" },
+          { id:"fejes",      name:"Fejes saláta",       img:"sals/fejes.jpg",          unit:"db" },
+          { id:"lollo",      name:"Lollo saláta zöld",       img:"sals/lollo.jpg",          unit:"db" },
+          { id:"madar",      name:"Madársaláta",      img:"sals/madar.jpg",        unit:"doboz" },
+          { id:"rukkola",    name:"Rukkola",          img:"sals/rukkola.jpg",      unit:"doboz" },
+          { id:"ceklalevél", name:"Céklalevél",       img:"sals/cekla.jpg",        unit:"doboz" },
+          { id:"mix",        name:"Mix saláta",       img:"sals/mix.jpg",          unit:"doboz" },
+          { id:"bebispenot", name:"Bébi spenót",      img:"sals/bebispenot.jpg",   unit:"doboz" },
+          { id:"romai",      name:"Római saláta",     img:"sals/romaisalata.jpg",  unit:"db" },
+          { id:"bebiromai",  name:"Bébi római saláta",img:"sals/bebiromai.jpg",    unit:"csomag" },
+          { id:"radicchio",  name:"Radicchio",        img:"sals/radicchio.jpg",    unit:"kg" },
+          { id:"edeskomeny", name:"Édeskömény",       img:"sals/edeskomeny.png",   unit:"db" }
+        ]}
+      ]
+    },
+    {
+      id: "tisztitott", label: "Tisztított zöldségek", gridId: "grid-tisztitott",
+      groups: [
+        { label: "Burgonya", items: [
+          { id:"t-burgonya-egesz",  name:"Burgonya Egész", img:"tisz/burgonya-egesz.jpg",     unit:"kg" },
+          { id:"t-burgonya-karika", name:"Burgonya Karika",img:"tisz/burgonya-karika.jpg",    unit:"kg" },
+          { id:"t-burgonya-hasab",  name:"Burgonya Hasáb", img:"tisz/burgonya-nagyhasab.jpg", unit:"kg" },
+          { id:"t-burgonya-kocka",  name:"Burgonya Kocka", img:"tisz/burgonya-nagykocka.jpg", unit:"kg" },
+          { id:"t-burgonya-parazs", name:"Burgonya Parázs",img:"tisz/burgonya-parazs.jpg",    unit:"kg" }
+        ]},
+        { label: "Káposztafélék", items: [
+          { id:"t-fejeskaposzta-reszelt", name:"Fejeskáposzta Reszelt",img:"tisz/fejeskaposzta-reszelt.jpg",    unit:"kg" },
+          { id:"t-fejeskaposzta-csik",    name:"Fejeskáposzta Csík",   img:"tisz/fejeskaposzta-vastag-csik.jpg",unit:"kg" },
+          { id:"t-kelkaposzta-csik",      name:"Kelkáposzta Csík",     img:"tisz/kelkaposzta-vastag-csik.jpg",  unit:"kg" },
+          { id:"t-lilakaposzta-csik",     name:"Lilakáposzta Csík",    img:"tisz/voroskaposzta-vekony-csik.jpg",unit:"kg" }
+        ]},
+        { label: "Gyökérzöldségek", items: [
+          { id:"t-zeller-egesz",         name:"Zeller Egész",        img:"tisz/zeller-egesz.jpg",         unit:"kg" },
+          { id:"t-karalabe-egesz",       name:"Karalábé Egész",      img:"tisz/karalabe-egesz.png",       unit:"kg" },
+          { id:"t-repa-egesz",           name:"Répa Egész",          img:"tisz/repa-egesz.jpg",           unit:"kg" },
+          { id:"t-repa-karika",          name:"Répa Karika",         img:"tisz/repa-karika.jpg",          unit:"kg" },
+          { id:"t-petrezselyem-egesz",   name:"Petrezselyem Egész",  img:"tisz/petrezselyem-egesz.jpg",   unit:"kg" },
+          { id:"t-petrezselyem-karika",  name:"Petrezselyem Karika", img:"tisz/petrezselyem-karika.jpg",  unit:"kg" },
+          { id:"t-petrezselyem-kocka",   name:"Petrezselyem Kocka",  img:"tisz/petrezselyem-kiskocka.jpg",unit:"kg" }
+        ]},
+        { label: "Hagymafélék", items: [
+          { id:"t-voroshagyma-egesz",  name:"Vöröshagyma Egész",  img:"tisz/voroshagyma-egesz.jpg",  unit:"kg" },
+          { id:"t-voroshagyma-karika", name:"Vöröshagyma Karika", img:"tisz/voroshagyma-karika.jpg", unit:"kg" },
+          { id:"t-lilahagyma-egesz",   name:"Lilahagyma Egész",   img:"tisz/lilahagyma-egesz.jpg",   unit:"kg" },
+          { id:"t-lilahagyma-karika",  name:"Lilahagyma Karika",  img:"tisz/lilahagyma-karika.jpg",  unit:"kg" },
+          { id:"t-foki",  name:"Fokhagyma tisztított",  img:"tisz/foki.jpg",  unit:"kg" }
+        ]}
+      ]
+    },
+    {
+      id: "tojas", label: "Tojás", gridId: "grid-tojas",
+      groups: [
+        { label: "Tojások", items: [
+          { id:"talcas", name:"Friss tojás M-es", img:"tojas/talca30.jpg",     unit:"db" },
+          { id:"furj",   name:"Fürj tojás 24db",img:"tojas/furj.jpg",    unit:"csomag" }
+        ]}
+      ]
+    }
+  ];
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+  // ─── Segédfüggvények ──────────────────────────────────────────────────────
+
+  // Minden terméket flat listában
+  function getAllItems() {
+    const all = [];
+    CATALOG.forEach(function(cat) {
+      cat.groups.forEach(function(grp) {
+        grp.items.forEach(function(item) {
+          all.push({ item: item, catLabel: cat.label, catId: cat.id });
+        });
+      });
+    });
+    return all;
+  }
+
+  // ─── Kártya HTML (csak kép, név, kiszerelés - ár/mennyiség/kosár nélkül) ──
+  function cardHtml(p, badgeLabel) {
+    return '<div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">' +
+      '<div class="product-item d-flex flex-column w-100 h-100">' +
+        '<div class="position-relative overflow-hidden" style="background:#ffffff;">' +
+          '<img class="img-fluid w-100" src="' + p.img + '" alt="' + p.name + '">' +
+        '</div>' +
+        '<div class="text-center p-4">' +
+          (badgeLabel ? '<span class="result-cat-badge">' + badgeLabel + '</span><br>' : '') +
+          '<span class="d-block h5 mb-2 mt-1">' + p.name + '</span>' +
+          '<span class="unit-label">Kiszerelés: ' + p.unit + '</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  // ─── Grid építés csoportokkal ─────────────────────────────────────────────
+  function buildGrids() {
+    CATALOG.forEach(function(cat) {
+      const target = document.getElementById(cat.gridId);
+      let html = '';
+      cat.groups.forEach(function(grp) {
+        html += '<div class="subcat-header w-100">' + grp.label + '</div>';
+        html += '<div class="row g-4 mb-2">';
+        grp.items.forEach(function(p) {
+          html += cardHtml(p, null);
+        });
+        html += '</div>';
+      });
+      target.innerHTML = html;
+    });
+  }
+
+  // ─── Keresés ──────────────────────────────────────────────────────────────
+  function onSearch() {
+    const q = document.getElementById('product-search').value.trim().toLowerCase();
+    const clearBtn = document.getElementById('search-clear');
+    const searchResults = document.getElementById('search-results');
+    const tabView = document.getElementById('tab-view');
+
+    clearBtn.classList.toggle('visible', q.length > 0);
+
+    if (q.length === 0) {
+      searchResults.style.display = 'none';
+      tabView.style.display = 'block';
+      document.getElementById('search-grid').innerHTML = '';
+      return;
+    }
+
+    searchResults.style.display = 'block';
+    tabView.style.display = 'none';
+
+    const matches = getAllItems().filter(function(x) {
+      return x.item.name.toLowerCase().includes(q);
+    });
+
+    const grid = document.getElementById('search-grid');
+    const noRes = document.getElementById('search-no-results');
+
+    if (matches.length === 0) {
+      grid.innerHTML = '';
+      noRes.style.display = 'block';
+    } else {
+      noRes.style.display = 'none';
+      grid.innerHTML = matches.map(function(x) {
+        return cardHtml(x.item, x.catLabel);
+      }).join('');
+    }
+  }
+
+  function clearSearch() {
+    document.getElementById('product-search').value = '';
+    onSearch();
+  }
+
+  // ─── Init ─────────────────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function() {
+    buildGrids();
+    document.getElementById('product-search').addEventListener('input', onSearch);
+  });
+  </script>
 </body>
 
 </html>
