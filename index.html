@@ -286,15 +286,7 @@
 </header>
 
 <section class="hero">
-  <video id="heroVideo" autoplay loop muted playsinline>
-    <!-- MOBIL VIDEÓ: Csak 640px-es képernyőszélesség alatt fog betölteni -->
-    <source src="https://telefon.revai-kristof001.workers.dev/" type="video/mp4" media="(max-width: 640px)">
-    
-    <!-- ASZTALI/SZÁMÍTÓGÉPES VIDEÓ: Minden egyéb esetben ez indul el -->
-    <source src="https://proba.revai-kristof001.workers.dev/" type="video/mp4">
-    
-    A böngésződ nem támogatja a videólejátszást.
-  </video>
+  <video id="heroVideo" autoplay loop muted playsinline></video>
 
   <div class="hero__actions">
     <a class="hero__btn hero__btn--primary" href="https://revaifruitkft.hu/nagyker/">Zöldség-gyümölcs nagykereskedelem</a>
@@ -304,6 +296,20 @@
 </section>
 
 <script>
+
+  const videoElement = document.getElementById('heroVideo');
+  if (videoElement) {
+    const desktopSrc = "https://proba.revai-kristof001.workers.dev/";
+    const mobileSrc = "https://telefon.revai-kristof001.workers.dev/";
+
+    if (window.innerWidth <= 640) {
+      videoElement.src = mobileSrc;
+    } else {
+      videoElement.src = desktopSrc;
+    }
+    
+    videoElement.load();
+  }
   // Fejléc háttere görgetéskor
   const header = document.getElementById('siteHeader');
   const onScroll = () => {
