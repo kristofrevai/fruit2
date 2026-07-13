@@ -162,6 +162,27 @@
     .product-item .text-center.p-4 { display:flex; flex-direction:column; flex:1; padding:1.25rem !important; }
     .product-item .h5 { font-size:16px; min-height:44px; display:flex; align-items:center; justify-content:center; line-height:1.3; }
     .product-item .unit-label { color:#888; font-size:14px; margin-top:auto; }
+
+
+    /* Mobil finomhangolás a 2 oszlopos nézethez */
+    @media (max-width: 576px) {
+      .product-item .position-relative {
+        height: 130px; /* Kisebb képmagasság mobilon, hogy ne nyújtsa meg a dobozt */
+      }
+      .product-item .text-center.p-4 {
+        padding: 0.75rem !important; /* Kisebb belső margó, hogy kényelmesen elférjen a szöveg */
+      }
+      .product-item .h5 {
+        font-size: 14px; /* Kicsit kisebb betűméret a terméknévnek */
+        min-height: 38px;
+      }
+      .product-item .unit-label {
+        font-size: 12px; /* Kisebb betűméret a kiszerelésnek */
+      }
+      .g-4, .gx-4 {
+        --bs-gx: 0.5rem; /* Kisebb oldalsó rés a termékek között mobilon, hogy több hely maradjon a tartalomnak */
+      }
+    }
   </style>
 </head>
 
@@ -518,7 +539,8 @@
 
   // ─── Kártya HTML (csak kép, név, kiszerelés - ár/mennyiség/kosár nélkül) ──
   function cardHtml(p, badgeLabel) {
-    return '<div class="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">' +
+    // Hozzáadva a col-6, így mobilon 2 termék lesz egymás mellett
+    return '<div class="col-6 col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch">' +
       '<div class="product-item d-flex flex-column w-100 h-100">' +
         '<div class="position-relative overflow-hidden" style="background:#ffffff;">' +
           '<img class="img-fluid w-100" src="' + p.img + '" alt="' + p.name + '">' +
@@ -579,7 +601,7 @@
       grid.innerHTML = '';
       noRes.style.display = 'block';
     } else {
-      noRes.style.display = 'none';
+      noRes.style.display = 'none';s
       grid.innerHTML = matches.map(function(x) {
         return cardHtml(x.item, x.catLabel);
       }).join('');
