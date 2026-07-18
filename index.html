@@ -3,13 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Révai Fruit Kft. — Zöldség-gyümölcs nagykereskedelem</title>
-<meta name="description" content="Révai Fruit Kft. — friss zöldség-gyümölcs nagykereskedelem, kiszállítás és konyhakész tisztított termékek.">
-  <!-- Favicon -->
-  <link href="asd.png" rel="icon">
+<meta name="google-site-verification" content="_JoyQEkcE0SfPYn5Onhm4nkJJRhKDArHIkt5tJrr66w" />
+<title>Révai Fruit Kft. — Zöldség-gyümölcs nagykereskedelem Heves megyében</title>
+<meta name="description" content="Révai Fruit Kft. — friss zöldség-gyümölcs nagykereskedelem, éttermeknek szóló kiszállítás és konyhakész, tisztított termékek Heves megyében.">
+
+<!-- Kanonikus URL - jelzi a Google-nek, hogy ez az oldal "hivatalos" változata, elkerülve a duplikált tartalom miatti pontlevonást -->
+<link rel="canonical" href="https://revaifruitkft.hu/">
+
+<!-- Favicon -->
+<link href="asd.png" rel="icon">
+
+<!-- Open Graph - így néz ki a link előnézete, ha valaki megosztja Facebookon, Messengeren, WhatsAppon -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="hu_HU">
+<meta property="og:site_name" content="Révai Fruit Kft.">
+<meta property="og:title" content="Révai Fruit Kft. — Zöldség-gyümölcs nagykereskedelem Heves megyében">
+<meta property="og:description" content="Friss zöldség-gyümölcs nagykereskedelem, éttermeknek szóló kiszállítás és konyhakész, tisztított termékek Heves megyében.">
+<meta property="og:url" content="https://revaifruitkft.hu/">
+<meta property="og:image" content="https://revaifruitkft.hu/asd.png">
+<!-- FONTOS: az og:image ideális esetben egy külön, 1200x630px-es, fotó jellegű kép legyen (pl. a termékekről),
+     nem a logó - a logó csak jobb híján van itt megadva helyőrzőként. -->
+
+<!-- Twitter/X kártya -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Révai Fruit Kft. — Zöldség-gyümölcs nagykereskedelem Heves megyében">
+<meta name="twitter:description" content="Friss zöldség-gyümölcs nagykereskedelem, éttermeknek szóló kiszállítás és konyhakész, tisztított termékek Heves megyében.">
+<meta name="twitter:image" content="https://revaifruitkft.hu/asd.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Révai Fruit Kft.",
+  "image": "https://revaifruitkft.hu/asd.png",
+  "url": "https://revaifruitkft.hu/",
+  "telephone": "[+36 30 287 7988]",
+  "email": "[info@revaifruitkft.hu]",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "[Utca, házszám]",
+    "addressLocality": "[Gyöngyös]",
+    "postalCode": "[3200]",
+    "addressRegion": "Heves megye",
+    "addressCountry": "HU"
+  },
+  "areaServed": {
+    "@type": "AdministrativeArea",
+    "name": "Heves megye"
+  },
+  "description": "Friss zöldség-gyümölcs nagykereskedelem, éttermeknek szóló kiszállítás és konyhakész, tisztított termékek Heves megyében.",
+  "priceRange": "$$",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "[08:00]",
+      "closes": "[16:00]"
+    }
+  ],
+  "sameAs": [
+    "[https://www.facebook.com/profile.php?id=100063596081084]",
+  ]
+}
+</script>
 
 <style>
   :root{
@@ -35,6 +96,20 @@
 
   a{ text-decoration: none; color: inherit; }
   ul{ list-style: none; margin: 0; padding: 0; }
+
+  /* Vizuálisan rejtett, de a keresőmotorok és képernyőolvasók számára
+     olvasható szöveg - a felhasználói élményt (a tiszta, szöveg nélküli
+     videós hero-t) nem érinti, viszont ad a Google-nek értelmezhető,
+     kulcsszó-releváns szöveges tartalmat a főoldalról. */
+  .sr-only{
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
 
   /* ---------- HEADER ---------- */
   .site-header{
@@ -239,23 +314,23 @@
       height: 100dvh;
       min-height: 560px; /* Megnövelt hely, hogy a logó, a menü és a gombok kényelmesen elférjenek egymás alatt */
     }
-    
+
     .hero video{
-      /* Biztosítja, hogy a videó a legoptimálisabb pontján vágódjon le mobilon. 
+      /* Biztosítja, hogy a videó a legoptimálisabb pontján vágódjon le mobilon.
          Ha a lényeg pl. picit feljebb van a videódban, átírhatod 'center 40%'-ra is. */
       object-position: center center;
     }
-    
-    .hero__actions{ 
-      flex-direction: column; 
-      width: 100%; 
+
+    .hero__actions{
+      flex-direction: column;
+      width: 100%;
       padding: 0 20px 32px; /* Kisebb alsó térköz, hogy a telefon alsó rendszersávja ne takarjon be */
       gap: 12px;
     }
-    
-    .hero__btn{ 
-      width: 100%; 
-      padding: 15px 18px; 
+
+    .hero__btn{
+      width: 100%;
+      padding: 15px 18px;
       font-size: 12.5px; /* Optimális méret, hogy a hosszú magyar szavak (pl. nagykereskedelem) se törjenek csúnyán több sorba */
       letter-spacing: .05em;
     }
@@ -266,7 +341,7 @@
 
 <header class="site-header" id="siteHeader">
   <a href="/" class="site-header__logo">
-    <img src="asd.png" alt="Révai Fruit Kft.">
+    <img src="asd.png" alt="Révai Fruit Kft. - zöldség-gyümölcs nagykereskedelem logó">
   </a>
 
   <nav class="main-nav" id="mainNav">
@@ -286,7 +361,14 @@
 </header>
 
 <section class="hero">
-  <video id="heroVideo" autoplay loop muted playsinline></video>
+  <!-- Vizuálisan rejtett H1 és leírás - a látványt nem érinti (a videós hero
+       marad tisztán szöveg nélkül), de a Google számára ad egy valódi,
+       kulcsszavas főcímet és leírást a lapról. Ez a bevett, korrekt módja
+       annak, ha a design szöveg nélküli, de az oldalnak mégis kell egy H1. -->
+  <h1 class="sr-only">Révai Fruit Kft. — Zöldség-gyümölcs nagykereskedelem és kiszállítás Heves megyében</h1>
+  <p class="sr-only">Friss zöldség-gyümölcs nagykereskedelem, éttermeknek szóló kiszállítás és konyhakész, tisztított termékek Heves megyében.</p>
+
+  <video id="heroVideo" autoplay loop muted playsinline aria-hidden="true"></video>
 
   <div class="hero__actions">
     <a class="hero__btn hero__btn--primary" href="https://revaifruitkft.hu/nagyker/">Zöldség-gyümölcs nagykereskedelem</a>
@@ -307,7 +389,7 @@
     } else {
       videoElement.src = desktopSrc;
     }
-    
+
     videoElement.load();
   }
   // Fejléc háttere görgetéskor
