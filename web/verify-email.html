@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<title>E-mail cím megerősítése - Révai Fruit Kft.</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="asd.png" rel="icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600&family=Lora:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: #fbf8f4;
+    font-family: 'Raleway', sans-serif;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .card {
+    background: #fff;
+    border: 1px solid #ece3d6;
+    border-radius: 16px;
+    max-width: 440px;
+    width: 100%;
+    padding: 44px 38px 38px 38px;
+    text-align: center;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.04);
+  }
+  .logo {
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: 19px;
+    color: #1f1f1f;
+    margin-bottom: 30px;
+    letter-spacing: 0.2px;
+  }
+  .logo span { color: #ff7a18; }
+
+  .icon-wrap {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    margin: 0 auto 22px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+  }
+  .icon-wrap.state-loading { background: #f7f2eb; }
+  .icon-wrap.state-success { background: #eafaf0; }
+  .icon-wrap.state-error   { background: #fdecea; }
+
+  .spinner {
+    width: 22px;
+    height: 22px;
+    border: 2.5px solid #e5d9c5;
+    border-top-color: #ff7a18;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .check-icon, .error-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  h1 {
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: 21px;
+    color: #1f1f1f;
+    margin: 0 0 10px 0;
+  }
+  p.desc {
+    font-size: 14px;
+    line-height: 1.65;
+    color: #6b6b6b;
+    margin: 0 0 26px 0;
+  }
+
+  .btn {
+    display: inline-block;
+    background: linear-gradient(135deg,#ff9d3d,#ff7a18);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 13px 32px;
+    border-radius: 50px;
+    box-shadow: 0 6px 16px rgba(255,122,24,0.28);
+    transition: filter 0.15s;
+  }
+  .btn:hover { filter: brightness(1.05); }
+
+  .footer-note {
+    margin-top: 26px;
+    font-size: 12px;
+    color: #b0aaa0;
+  }
+
+  [data-state] { display: none; }
+  [data-state].active { display: block; }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="logo">Révai Fruit <span>Kft.</span></div>
+
+    <!-- Betöltés -->
+    <div data-state="loading" class="active">
+      <div class="icon-wrap state-loading"><div class="spinner"></div></div>
+      <h1>Megerősítés folyamatban</h1>
+      <p class="desc">Kérjük, várjon egy pillanatot, amíg megerősítjük az e-mail címét...</p>
+    </div>
+
+    <!-- Siker -->
+    <div data-state="success">
+      <div class="icon-wrap state-success">
+        <svg class="check-icon" viewBox="0 0 24 24" fill="none">
+          <path d="M5 13l4 4L19 7" stroke="#1e8449" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h1>E-mail cím megerősítve</h1>
+      <p class="desc">Köszönjük, sikeresen megerősítette az e-mail címét. Mostantól a fiókja teljeskörűen használható.</p>
+      <a class="btn" href="https://revaifruitkft.hu/webshop.html">Vissza a webshopba</a>
+    </div>
+
+    <!-- Hiba -->
+    <div data-state="error">
+      <div class="icon-wrap state-error">
+        <svg class="error-icon" viewBox="0 0 24 24" fill="none">
+          <path d="M6 6l12 12M18 6L6 18" stroke="#c0392b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h1>A link érvénytelen vagy lejárt</h1>
+      <p class="desc" id="error-desc">Ez a megerősítő link már nem érvényes - előfordulhat, hogy már felhasználta, vagy lejárt az érvényessége. Kérjük, jelentkezzen be, és kérjen új megerősítő e-mailt a profiljából.</p>
+      <a class="btn" href="https://revaifruitkft.hu/webshop.html">Vissza a webshopba</a>
+    </div>
+
+    <div class="footer-note">Révai Fruit Kft.</div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+  <script>
+    // Ugyanaz a Firebase konfiguráció, mint a webshop.html-ben.
+    const firebaseConfig = {
+      apiKey: "AIzaSyBTLI2xxuOuq3pHaYOaIVyykVE7-ysvQ4M",
+      authDomain: "revai-fruit-webshop.firebaseapp.com",
+      projectId: "revai-fruit-webshop",
+      storageBucket: "revai-fruit-webshop.firebasestorage.app",
+      messagingSenderId: "712940818305",
+      appId: "1:712940818305:web:10216a664d3ed5f7e2a280",
+      measurementId: "G-ZK8DSHH8DE"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    function showState(name) {
+      document.querySelectorAll('[data-state]').forEach(function (el) {
+        el.classList.toggle('active', el.getAttribute('data-state') === name);
+      });
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const mode = params.get('mode');
+    const oobCode = params.get('oobCode');
+
+    if (mode === 'verifyEmail' && oobCode) {
+      auth.applyActionCode(oobCode)
+        .then(function () {
+          showState('success');
+        })
+        .catch(function (err) {
+          console.error('E-mail megerősítési hiba:', err);
+          showState('error');
+        });
+    } else {
+      // Nem megerősítő link (pl. valaki kézzel nyitotta meg az oldalt),
+      // vagy hiányzik a szükséges paraméter.
+      document.getElementById('error-desc').textContent = 'Ez a link nem egy érvényes e-mail megerősítő link. Kérjük, használja a legutóbb kapott megerősítő e-mailben található linket.';
+      showState('error');
+    }
+  </script>
+</body>
+</html>
