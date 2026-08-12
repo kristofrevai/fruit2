@@ -3,22 +3,21 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Zöldség-Gyümölcs Nagykereskedelem</title>
+  <title>Kapcsolat - Révai Fruit Kft.</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta content="" name="keywords">
-  <meta content="" name="description">
+  <meta content="Lépjen kapcsolatba a Révai Fruit Kft.-vel: telefon, e-mail, vagy üzenet az űrlapon keresztül. Zöldség-gyümölcs nagykereskedelem a Mátra térségében." name="description">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="favicon.svg" />
-<link rel="shortcut icon" href="favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-<link rel="manifest" href="site.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Lora:wght@600;700&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Lora:ital,wght@0,600;0,700;1,600&family=Raleway:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -33,9 +32,7 @@
   <!-- Styles -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
 
-  <!-- Custom Navigation Styles -->
   <style>
     header {
       text-align: center;
@@ -47,13 +44,8 @@
       color: black;
     }
 
-    .logo img {
-      max-height: 150px;
-    }
-
-    nav {
-      margin-top: -10px;
-    }
+    .logo img { max-height: 150px; }
+    nav { margin-top: -10px; }
 
     .menu {
       list-style: none;
@@ -66,9 +58,7 @@
       margin-top: 5px;
     }
 
-    .menu li {
-      position: relative;
-    }
+    .menu li { position: relative; }
 
     .menu a {
       color: black;
@@ -94,46 +84,364 @@
       transition: transform 0.3s ease;
     }
 
-    .menu a:hover::after {
-      transform: scaleX(1);
-    }
+    .menu a:hover::after { transform: scaleX(1); }
 
-    .dropdown .submenu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: #444;
-      padding: 10px 0;
-      list-style: none;
-      min-width: 180px;
-      z-index: 1000;
-      border-radius: 5px;
-    }
-
-    .dropdown:hover .submenu {
-      display: block;
-    }
-
-    .submenu li {
-      padding: 5px 20px;
-    }
-
-    .submenu li a {
-      color: white;
-      text-decoration: none;
-    }
-
-    .submenu li a:hover {
-      text-decoration: underline;
-    }
-
-    hr {
+    header hr {
       border: none;
       border-top: 1px solid orange;
       margin: 15px auto -5px auto;
       width: 90%;
       margin-top: -30px;
+    }
+
+    .kap {
+      --paper: #FFFFFF;
+      --paper-2: #FBF7F1;
+      --paper-3: #FFF4E8;
+      --line: #E9E0D2;
+      --line-soft: #F2EADE;
+      --ink: #16211A;
+      --muted: #5A5A5A;
+      --soft: #8E8371;
+      --orange: #FF7A18;
+      --orange-soft: #FF9D3D;
+      --leaf: #37624A;
+
+      font-family: 'Open Sans', sans-serif;
+      color: var(--muted);
+      overflow-x: hidden;
+    }
+
+    .kap *,
+    .kap *::before,
+    .kap *::after { box-sizing: border-box; }
+
+    .kap-section { padding: 60px 0; }
+    .kap-container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    .kap-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 3.2px;
+      text-transform: uppercase;
+      color: var(--leaf);
+      margin: 0;
+    }
+    .kap-eyebrow::before {
+      content: '';
+      width: 26px;
+      height: 1px;
+      background: currentColor;
+      opacity: .5;
+      flex-shrink: 0;
+    }
+
+    .kap-h1 {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      color: var(--ink);
+      font-size: clamp(30px, 5vw, 50px);
+      line-height: 1.12;
+      letter-spacing: -.6px;
+      margin: 18px 0 16px;
+      overflow-wrap: break-word;
+    }
+    .kap-h1 em { font-style: italic; font-weight: 600; color: var(--orange); }
+
+    .kap-h2 {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      color: var(--ink);
+      font-size: clamp(22px, 3.2vw, 32px);
+      line-height: 1.18;
+      letter-spacing: -.3px;
+      margin: 14px 0 0;
+      overflow-wrap: break-word;
+    }
+
+    .kap-lead {
+      font-size: 16px;
+      line-height: 1.85;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+  </style>
+
+  <style>
+    /* ── Bevezető ── */
+    .kap-intro {
+      background: linear-gradient(160deg, var(--paper) 0%, var(--paper-2) 55%, var(--paper-3) 100%);
+      border-bottom: 1px solid var(--line);
+      padding: 58px 0 54px;
+      text-align: center;
+    }
+    .kap-intro-inner { max-width: 640px; margin: 0 auto; }
+
+    .kap-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.3fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .kap-info {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      color: var(--muted);
+      box-shadow: 0 10px 30px rgba(22, 33, 26, .05);
+      position: relative;
+      overflow: hidden;
+    }
+    .kap-info::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--orange-soft), var(--orange));
+    }
+    .kap-info-block { margin-bottom: 28px; }
+    .kap-info-block:last-of-type { margin-bottom: 0; }
+    .kap-info-label {
+      font-family: 'Raleway', sans-serif;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin: 0 0 10px;
+    }
+    .kap-info-value {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--ink);
+      text-decoration: none;
+      line-height: 1.3;
+      transition: color .15s ease;
+    }
+    .kap-info-value:hover { color: var(--orange); }
+    .kap-info-value i {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--paper-3);
+      border: 1px solid var(--line);
+      color: var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .kap-info-spacer { flex: 1; min-height: 20px; }
+
+    .kap-social { display: flex; gap: 10px; flex-wrap: wrap; }
+    .kap-social a {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--paper-2);
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      text-decoration: none;
+      transition: background .16s ease, border-color .16s ease, color .16s ease, transform .16s ease;
+    }
+    .kap-social a:hover {
+      background: var(--paper-3);
+      border-color: #FFCF9E;
+      color: var(--orange);
+      transform: translateY(-2px);
+    }
+
+    /* ── Űrlap kártya ── */
+    .kap-form-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 38px;
+      box-shadow: 0 10px 30px rgba(22, 33, 26, .05);
+    }
+
+    .kap-form-card .form-control {
+      border-radius: 10px;
+      border: 1.5px solid var(--line);
+      background: var(--paper-2);
+      font-family: 'Open Sans', sans-serif;
+      font-size: 15px;
+    }
+    .kap-form-card .form-control:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(255, 122, 24, .14);
+      background: #fff;
+    }
+    .kap-form-card .form-floating > label {
+      font-family: 'Raleway', sans-serif;
+      color: var(--soft);
+    }
+
+    .kap-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 50px;
+      padding: 14px 30px;
+      border: none;
+      background: linear-gradient(135deg, var(--orange-soft), var(--orange));
+      color: #fff;
+      font-family: 'Raleway', sans-serif;
+      font-size: 14.5px;
+      font-weight: 500;
+      letter-spacing: .3px;
+      box-shadow: 0 10px 24px rgba(255, 122, 24, .28);
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .kap-submit:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(255, 122, 24, .36); }
+    .kap-submit:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+    #form-status:empty { display: none; }
+    #form-status .alert {
+      border-radius: 10px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 14px;
+      border: none;
+    }
+    #form-status .alert-success { background: #EAFAF0; color: #1E8449; }
+    #form-status .alert-danger { background: #FDECEA; color: #C0392B; }
+
+    /* ═══════════════════════════════════════════════════════════════
+       TÉRKÉP
+       ═══════════════════════════════════════════════════════════════ */
+    .kap-map-section { background: var(--paper-2); border-top: 1px solid var(--line); }
+    .kap-map-head { text-align: center; max-width: 560px; margin: 0 auto 30px; }
+    .kap-map-frame {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 40px rgba(22, 33, 26, .08);
+      line-height: 0;
+    }
+    .kap-map-frame iframe { width: 100%; height: 430px; display: block; border: 0; }
+
+    .kap-cta { background: var(--paper-3); border-top: 1px solid var(--line); }
+    .kap-cta-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 26px 40px;
+    }
+    .kap-cta-text { max-width: 540px; }
+    .kap-cta-text p { margin: 12px 0 0; font-size: 15.5px; line-height: 1.8; }
+    .kap-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .kap-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border-radius: 50px;
+      padding: 14px 28px;
+      border: 1px solid transparent;
+      font-family: 'Raleway', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: .3px;
+      text-decoration: none;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
+    }
+    .kap-btn-primary {
+      background: linear-gradient(135deg, var(--orange-soft), var(--orange));
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(255, 122, 24, .28);
+    }
+    .kap-btn-primary:hover { color: #fff; transform: translateY(-2px); box-shadow: 0 14px 30px rgba(255, 122, 24, .36); }
+    .kap-btn-ghost { background: #fff; border-color: #E2D6C4; color: var(--muted); }
+    .kap-btn-ghost:hover { background: #FFF3E6; border-color: #FFCF9E; color: var(--orange); }
+    .kap-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+    .kap-rise {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .7s cubic-bezier(.22, .8, .28, 1), transform .7s cubic-bezier(.22, .8, .28, 1);
+    }
+    .kap-rise.is-in { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .kap-rise { opacity: 1; transform: none; transition: none; }
+      .kap-btn, .kap-submit, .kap-social a { transition: none; }
+      .kap-btn-primary:hover, .kap-submit:hover, .kap-social a:hover { transform: none; }
+    }
+  </style>
+
+  <style>
+
+    @media (max-width: 991.98px) {
+      .kap-section { padding: 48px 0; }
+      .kap-intro { padding: 44px 0; }
+      .kap-grid { grid-template-columns: 1fr; gap: 22px; }
+      .kap-info { padding: 36px 32px; }
+    }
+
+    @media (max-width: 767.98px) {
+      .logo img { max-height: 90px; }
+      .menu { gap: 2px; }
+      .menu a { padding: 8px 6px; font-size: 13px; }
+      header hr { margin-top: -18px; }
+
+      .kap-section { padding: 40px 0; }
+      .kap-container { padding: 0 16px; }
+      .kap-intro { padding: 34px 0; }
+      .kap-lead { font-size: 15px; line-height: 1.8; }
+
+      .kap-info { padding: 30px 24px; border-radius: 16px; }
+      .kap-info-block { margin-bottom: 24px; }
+      .kap-info-value { font-size: 18px; gap: 10px; }
+      .kap-info-value i { width: 34px; height: 34px; font-size: 13px; }
+
+      .kap-form-card { padding: 26px 22px; border-radius: 16px; }
+
+      .kap-map-frame { border-radius: 14px; }
+      .kap-map-frame iframe { height: 320px; }
+      .kap-map-head { margin-bottom: 22px; }
+
+      .kap-cta-text p { font-size: 14.5px; line-height: 1.75; }
+      .kap-actions { width: 100%; flex-direction: column; gap: 10px; }
+      .kap-btn { width: 100%; padding: 15px 20px; }
+    }
+
+    /* ── Telefon (≤ 480px) ── */
+    @media (max-width: 480px) {
+      .kap-container { padding: 0 14px; }
+      .kap-eyebrow { font-size: 10px; letter-spacing: 2.4px; gap: 9px; }
+      .kap-eyebrow::before { width: 18px; }
+      .kap-h1 { margin: 14px 0 14px; }
+      .kap-info { padding: 26px 20px; }
+      .kap-form-card { padding: 22px 18px; }
+      .kap-submit { width: 100%; justify-content: center; padding: 15px 20px; }
+      .kap-map-frame iframe { height: 260px; }
+    }
+
+    /* ── Nagyon keskeny (≤ 359px) ── */
+    @media (max-width: 359.98px) {
+      .kap-info-value { font-size: 16.5px; }
+      .kap-social a { width: 38px; height: 38px; font-size: 14px; }
     }
   </style>
 </head>
@@ -144,10 +452,10 @@
     <div class="spinner-border text-primary" role="status"></div>
   </div>
 
-  <!-- Header with Logo + Nav -->
+  <!-- Fejléc -->
   <header>
     <div class="logo">
-      <img src="asd.png" alt="Révai Fruit KFT." href="https://revaifruitkft.hu/">
+      <a href="https://revaifruitkft.hu/"><img src="asd.png" alt="Révai Fruit Kft."></a>
     </div>
     <hr>
     <nav>
@@ -162,131 +470,195 @@
     </nav>
   </header>
 
+  <main class="kap">
 
-    
+    <section class="kap-intro">
+      <div class="kap-container">
+        <div class="kap-intro-inner kap-rise">
+          <p class="kap-eyebrow">Kapcsolat</p>
+          <h1 class="kap-h1">Kérdése van? Keressen <em>bennünket</em>, és segítünk.</h1>
+          <p class="kap-lead">Rendeléssel, kínálattal vagy szállítással kapcsolatos kérdéseire szívesen válaszolunk - telefonon, e-mailben, vagy az alábbi űrlapon keresztül.</p>
+        </div>
+      </div>
+    </section>
+    <section class="kap-section">
+      <div class="kap-container">
+        <div class="kap-grid">
 
-    <!-- Contact Start -->
-    <div class="container-xxl py-6">
-        <div class="container">
-            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <h1 class="display-5 mb-3">Lépjen kapcsolatba velünk</h1>
-                <p>Keressen bennünket bizalommal, ha kérdése van, ajánlatot szeretne kérni, vagy további információra van szüksége szolgáltatásainkról. Csapatunk készséggel áll rendelkezésére.</p>
+          <!-- ── Elérhetőségek ── -->
+          <div class="kap-info kap-rise">
+            <div class="kap-info-block">
+              <p class="kap-info-label">Telefonszám</p>
+              <a class="kap-info-value" href="tel:+36302877988"><i class="fa fa-phone-alt"></i>+36 30 287 7988</a>
             </div>
-            <div class="row g-5 justify-content-center">
-                <div class="col-lg-5 col-md-12 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="bg-primary text-white d-flex flex-column justify-content-center h-100 p-5">
-                        <h5 class="text-white">Telefonszám</h5>
-                        <p class="mb-5"><i class="fa fa-phone-alt me-3"></i>+36 30 287 7988</p>
-                        <h5 class="text-white">Email cím</h5>
-                        <p class="mb-5"><i class="fa fa-envelope me-3"></i>info@revaifruitkft.hu</p>
-                        <h5 class="text-white">Kövessen minket</h5>
-                        <div class="d-flex pt-2">
-                            <a class="btn btn-square btn-outline-light rounded-circle me-1" href="https://www.facebook.com/profile.php?id=100063596081084"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-outline-light rounded-circle me-0" href="https://www.linkedin.com/company/r%C3%A9vai-fruit-kft/?viewAsMember=true"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
+            <div class="kap-info-block">
+              <p class="kap-info-label">E-mail cím</p>
+              <a class="kap-info-value" href="mailto:info@revaifruitkft.hu"><i class="fa fa-envelope"></i>info@revaifruitkft.hu</a>
+            </div>
+
+            <div class="kap-info-spacer"></div>
+
+            <div class="kap-info-block" style="margin-bottom:0;">
+              <p class="kap-info-label">Kövessen minket</p>
+              <div class="kap-social">
+                <a href="https://www.facebook.com/profile.php?id=100063596081084" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.linkedin.com/company/r%C3%A9vai-fruit-kft/?viewAsMember=true" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Üzenetküldő űrlap ── -->
+          <div class="kap-form-card kap-rise">
+            <form id="contact-form">
+              <!-- Web3Forms Access Key -->
+              <input type="hidden" name="access_key" value="da22dc51-6a36-40a1-b534-d87a42175fd7">
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
+                    <label for="name">Név</label>
+                  </div>
                 </div>
-                <div class="col-lg-7 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                    <form id="contact-form">
-    <!-- Web3Forms Access Key -->
-    <input type="hidden" name="access_key" value="da22dc51-6a36-40a1-b534-d87a42175fd7">
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
+                    <label for="email">Email</label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required>
+                    <label for="subject">Téma</label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-floating">
+                    <textarea class="form-control" placeholder="Leave a message here" id="message" name="message" style="height: 200px" required></textarea>
+                    <label for="message">Üzenet</label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <button class="kap-submit" type="submit"><i class="fa fa-paper-plane"></i> Küldés</button>
+                </div>
+              </div>
+            </form>
 
-    <div class="row g-3">
-        <div class="col-md-6">
-            <div class="form-floating">
-                <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
-                <label for="name">Név</label>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-floating">
-                <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
-                <label for="email">Email</label>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="form-floating">
-                <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required>
-                <label for="subject">Téma</label>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a message here" id="message" name="message" style="height: 200px" required></textarea>
-                <label for="message">Üzenet</label>
-            </div>
-        </div>
-        <div class="col-12">
-            <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">Küldés</button>
-        </div>
-    </div>
-</form>
+            <!-- Üzenet megjelenítése -->
+            <div id="form-status" style="margin-top:15px;"></div>
+          </div>
 
-<!-- Üzenet megjelenítése -->
-<div id="form-status" style="margin-top:15px;"></div>
+        </div>
+      </div>
+    </section>
 
-<script>
-document.getElementById('contact-form').addEventListener('submit', function(e) {
+    <section class="kap-section kap-map-section">
+      <div class="kap-container">
+        <div class="kap-map-head kap-rise">
+          <p class="kap-eyebrow" style="justify-content:center;">Térségünk</p>
+          <h2 class="kap-h2">Gyöngyösről indulunk a Mátra térségébe</h2>
+        </div>
+        <div class="kap-map-frame kap-rise">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d85747.24921758354!2d19.86944932234504!3d47.80855935987885!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47405a0f823e231f%3A0xf1b008aea774ed94!2zR3nDtm5necO2cw!5e0!3m2!1shu!2shu!4v1755262177325!5m2!1shu!2shu"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            title="Révai Fruit Kft. térsége - Gyöngyös"
+            aria-hidden="false" tabindex="0"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section class="kap-section kap-cta">
+      <div class="kap-container">
+        <div class="kap-cta-inner">
+          <div class="kap-cta-text kap-rise">
+            <p class="kap-eyebrow">Mielőtt ír</p>
+            <h2 class="kap-h2">Nézze meg a kínálatot, vagy olvasson a partnereinkről.</h2>
+            <p>Sok kérdésre gyorsabb választ ad, ha előbb átfutja, mit szállítunk, és kikkel dolgozunk együtt.</p>
+          </div>
+          <div class="kap-actions kap-rise">
+            <a class="kap-btn kap-btn-primary" href="https://revaifruitkft.hu/termeklista"><i class="fa fa-basket-shopping"></i> Kínálat megtekintése</a>
+            <a class="kap-btn kap-btn-ghost" href="https://revaifruitkft.hu/referenciak"><i class="fa fa-users"></i> Partnereink</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Vissza a tetejére -->
+  <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+  <!-- JavaScript könyvtárak -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/wow/wow.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/waypoints/waypoints.min.js"></script>
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+  document.getElementById('contact-form').addEventListener('submit', function (e) {
     e.preventDefault(); // ne töltse újra az oldalt
 
-    let form = e.target;
-    let formData = new FormData(form);
+    var form = e.target;
+    var formData = new FormData(form);
+    var statusDiv = document.getElementById('form-status');
+    var submitBtn = form.querySelector('.kap-submit');
+    var submitOriginal = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Küldés...';
 
     fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: formData
+      method: 'POST',
+      body: formData
     })
-    .then(async (response) => {
-        let json = await response.json();
-        let statusDiv = document.getElementById('form-status');
-
-        if (response.status === 200) {
-            statusDiv.innerHTML = `<div class="alert alert-success">✅ Üzenet sikeresen elküldve!</div>`;
-            form.reset();
+      .then(function (response) {
+        return response.json().then(function (json) { return { ok: response.status === 200, json: json }; });
+      })
+      .then(function (result) {
+        if (result.ok) {
+          statusDiv.innerHTML = '<div class="alert alert-success">✅ Üzenet sikeresen elküldve!</div>';
+          form.reset();
         } else {
-            statusDiv.innerHTML = `<div class="alert alert-danger">❌ Hiba történt: ${json.message}</div>`;
+          statusDiv.innerHTML = '<div class="alert alert-danger">❌ Hiba történt: ' + (result.json && result.json.message ? result.json.message : 'ismeretlen hiba') + '</div>';
         }
-    })
-    .catch((error) => {
-        document.getElementById('form-status').innerHTML =
-            `<div class="alert alert-danger">⚠️ Hálózati hiba! Kérjük, próbálja újra.</div>`;
-    });
-});
-</script>
+      })
+      .catch(function () {
+        statusDiv.innerHTML = '<div class="alert alert-danger">⚠️ Hálózati hiba! Kérjük, próbálja újra.</div>';
+      })
+      .finally(function () {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = submitOriginal;
+      });
+  });
+  </script>
 
+  <script>
+  (function () {
+    var items = document.querySelectorAll('.kap-rise');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Contact End -->
+    function showAll() {
+      for (var i = 0; i < items.length; i++) items[i].classList.add('is-in');
+    }
 
+    if (reduce || !('IntersectionObserver' in window)) { showAll(); return; }
 
-    <!-- Google Map Start -->
-    <div class="container-xxl px-0 wow fadeIn" data-wow-delay="0.1s" style="margin-bottom: -6px;">
-        <iframe class="w-100" style="height: 450px;"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d85747.24921758354!2d19.86944932234504!3d47.80855935987885!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47405a0f823e231f%3A0xf1b008aea774ed94!2zR3nDtm5necO2cw!5e0!3m2!1shu!2shu!4v1755262177325!5m2!1shu!2shu"
-            frameborder="0" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-    </div>
-    <!-- Google Map End -->
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-in');
+        io.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -50px 0px', threshold: 0.05 });
 
+    for (var i = 0; i < items.length; i++) io.observe(items[i]);
 
-
-
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
-
-
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    setTimeout(showAll, 3000);
+  })();
+  </script>
 </body>
 
 </html>
