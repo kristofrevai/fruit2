@@ -247,6 +247,7 @@
           <li class="nav-item me-2 mb-2"><a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-5">Saláták</a></li>
           <li class="nav-item me-2 mb-2"><a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-6">Tisztított zöldségek</a></li>
           <li class="nav-item me-2 mb-2"><a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-7">Tojás</a></li>
+          <li class="nav-item me-2 mb-2"><a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-8">Szárazáru</a></li>
         </ul>
         <div class="tab-content">
           <div id="tab-1" class="tab-pane fade show p-0 active"><div id="grid-zoldseg"></div></div>
@@ -256,6 +257,7 @@
           <div id="tab-5" class="tab-pane fade show p-0"><div id="grid-salatak"></div></div>
           <div id="tab-6" class="tab-pane fade show p-0"><div id="grid-tisztitott"></div></div>
           <div id="tab-7" class="tab-pane fade show p-0"><div id="grid-tojas"></div></div>
+          <div id="tab-8" class="tab-pane fade show p-0"><div id="grid-szarazaru"></div></div>
         </div>
       </div>
     </div>
@@ -296,7 +298,7 @@
   <script src="js/main.js"></script>
 
   <script>
-  // ─── TERMÉKADATOK csoportosítva ───────────────────────────────────────────
+  // ─── TERMÉKADATOK csoportosítva (szinkronban a webshop catalog.js-sel) ────
   const CATALOG = [
     {
       id: "zoldseg", label: "Zöldségek", gridId: "grid-zoldseg",
@@ -313,7 +315,8 @@
           { id:"lilali",         name:"Lilahagyma",      img:"zold/lilali.jpg",         unit:"kg" },
           { id:"pore",           name:"Póréhagyma",      img:"zold/pore.jpg",           unit:"db" },
           { id:"feherhagyma",    name:"Fehérhagyma",     img:"zold/feherhagyma.jpg",    unit:"kg" },
-          { id:"ujhagyma",       name:"Újhagyma",        img:"zold/ujhagyma.jpg",       unit:"csomó" }
+          { id:"ujhagyma",       name:"Újhagyma",        img:"zold/ujhagyma.jpg",       unit:"csomó" },
+          { id:"salotta",        name:"Salottahagyma",   img:"zold/salott.jpg",         unit:"kg" }
         ]},
         { label: "Káposztafélék", items: [
           { id:"Broccoli",       name:"Brokkoli",              img:"zold/Broccoli.jpg",      unit:"kg" },
@@ -322,46 +325,53 @@
           { id:"karfiol",        name:"Karfiol",               img:"zold/karfiol.jpg",       unit:"kg" },
           { id:"kelkapi",        name:"Kelkáposzta",           img:"zold/kelkapi.jpg",       unit:"kg" },
           { id:"lilakapi",       name:"Lila káposzta",         img:"zold/lilakapi.jpg",      unit:"kg" },
-          { id:"Pak-choi",       name:"Pak-choi",              img:"zold/Pak-choi.jpg",      unit:"kg" }
+          { id:"Pak-choi",       name:"Pak-choi",              img:"zold/Pak-choi.jpg",      unit:"kg" },
+          { id:"kinaikel",       name:"Kínai kel",             img:"zold/kinaikel.jpg",      unit:"kg" }
         ]},
         { label: "Paprikafélek", items: [
           { id:"tv",             name:"Tv paprika",                    img:"zold/tv.jpg",       unit:"kg" },
-          { id:"eros",           name:"Hegyes erős (extra)",           img:"zold/eros.jpg",     unit:"db" },
           { id:"tricolor",       name:"Kaliforniai paprika (Tricolor)",img:"zold/tricolor.jpg", unit:"kg" },
           { id:"kalif",          name:"Kaliforniai paprika (Piros)",   img:"zold/kalif.jpg",    unit:"kg" },
-          { id:"chili",          name:"Chili paprika",                 img:"zold/chili.jpg",    unit:"kg" },
           { id:"kapia",          name:"Kápia",                         img:"zold/kapia.jpg",    unit:"kg" }
         ]},
+        { label: "Erős paprikák", items: [
+          { id:"eros",           name:"Zöld erős paprika", img:"zold/eros.jpg",  unit:"db" },
+          { id:"chili",          name:"Cayenne chili",     img:"zold/chili.jpg", unit:"kg" },
+          { id:"jalapeno",       name:"Jalapeno",          img:"zold/jala.jpg",  unit:"kg" },
+          { id:"habanero",       name:"Habanero",          img:"zold/haba.jpg",  unit:"kg" }
+        ]},
         { label: "Paradicsomfélék", items: [
-          { id:"pari",           name:"Paradicsom",       img:"zold/pari.jpg",   unit:"kg" },
-          { id:"koktel",         name:"Koktélparadicsom", img:"zold/koktel.jpg", unit:"kg" },
+          { id:"pari",           name:"Paradicsom",             img:"zold/pari.jpg",        unit:"kg" },
+          { id:"koktel",         name:"Koktélparadicsom",       img:"zold/koktel.jpg",      unit:"kg" },
           { id:"sargakoktel",    name:"Koktélparadicsom sárga", img:"zold/sargakoktel.jpg", unit:"kg" }
         ]},
         { label: "Gyökérzöldségek", items: [
-          { id:"repa",           name:"Sárgarépa",          img:"zold/repa.jpg",          unit:"kg" },
-          { id:"gyoker",         name:"Petrezselyem Gyökér",img:"zold/gyoker.jpg",        unit:"kg" },
-          { id:"cekla-z",        name:"Cékla",              img:"zold/cekla.jpg",         unit:"kg" },
-          { id:"pirosretek",     name:"Piros retek",        img:"zold/pirosretek.jpg",    unit:"csomó" },
-          { id:"zellergumo",     name:"Zellergumó",         img:"zold/zellergumo.jpg",    unit:"kg" },
-          { id:"angolzeller",    name:"Angol zeller",       img:"zold/angolzeller.jpg",   unit:"csomag" },
-          { id:"jegcsap",        name:"Jégcsapretek",       img:"zold/jegcsap.jpg",       unit:"kg" }
+          { id:"repa",           name:"Sárgarépa",           img:"zold/repa.jpg",          unit:"kg" },
+          { id:"gyoker",         name:"Petrezselyem Gyökér", img:"zold/gyoker.jpg",        unit:"kg" },
+          { id:"feketegyoker",   name:"Fekete Gyökér",       img:"zold/feketegyok.jpg",    unit:"kg" },
+          { id:"cekla-z",        name:"Cékla",               img:"zold/cekla.jpg",         unit:"kg" },
+          { id:"zellerzold",     name:"Zellergumó zölddel",  img:"zold/zellerzold.jpg",    unit:"db" },
+          { id:"zellergumo",     name:"Zellergumó",          img:"zold/zellergumo.jpg",    unit:"kg" },
+          { id:"angolzeller",    name:"Angol zeller",        img:"zold/angolzeller.jpg",   unit:"csomag" },
+          { id:"jegcsap",        name:"Jégcsapretek",        img:"zold/jegcsap.jpg",       unit:"kg" }
         ]},
         { label: "Tökfélék", items: [
-          { id:"kigyo",          name:"Kígyó uborka", img:"zold/kigyo.jpg",     unit:"kg" },
-          { id:"furtosubi",      name:"Fürtös uborka",img:"zold/furtosubi.jpg", unit:"kg" },
-          { id:"cukkini",        name:"Cukkini",img:"zold/cukkini.jpg", unit:"kg" },
-          { id:"sutotok",        name:"Sütőtök",img:"zold/sutotok.jpg", unit:"kg" },
-          { id:"fozotok",        name:"Főzőtök",img:"zold/fozo.jpg", unit:"kg" },
-          { id:"padlizsan",      name:"Padlizsán",img:"zold/padlizsan.jpg", unit:"kg" }
+          { id:"kigyo",          name:"Kígyó uborka",           img:"zold/kigyo.jpg",     unit:"kg" },
+          { id:"furtosubi",      name:"Kovászolni való uborka", img:"zold/furtosubi.jpg", unit:"kg" },
+          { id:"cukkini",        name:"Cukkini",                img:"zold/cukkini.jpg",   unit:"kg" },
+          { id:"sutotok",        name:"Sütőtök",                img:"zold/sutotok.jpg",   unit:"kg" },
+          { id:"fozotok",        name:"Főzőtök",                img:"zold/fozo.jpg",      unit:"kg" },
+          { id:"patisszon",      name:"Patiszon csillagtök",    img:"zold/patisszon.jpg", unit:"kg" },
+          { id:"padlizsan",      name:"Padlizsán",              img:"zold/padlizsan.jpg", unit:"kg" }
         ]},
         { label: "Gombák", items: [
-          { id:"gomba",          name:"Gomba Csiperke", img:"zold/gomba.jpg",        unit:"0,5 kg/csomag" },
-          { id:"barnagomba",     name:"Barna Csiperke", img:"zold/barnacsiperke.jpg",unit:"0,5 kg/csomag" },
-          { id:"laska",          name:"Laskagomba", img:"zold/laska.jpg",        unit:"0,5 kg/csomag" },
-          { id:"shimei",         name:"Shimei fehér", img:"zold/shimeji.jpg",        unit:"150 g/csomag" },
-          { id:"shimeibarna",    name:"Shimei barna", img:"zold/barnashimeji.jpeg",  unit:"150 g/csomag" },
-          { id:"ordog",          name:"Ördögszekér gomba", img:"zold/ordog.jpg",        unit:"2 kg/csomag" },
-          { id:"shitake",        name:"Shiitake gomba", img:"zold/shitake.jpg",        unit:"0,5 kg/csomag" }
+          { id:"gomba",          name:"Gomba Csiperke",    img:"zold/gomba.jpg",         unit:"0,5 kg/csomag" },
+          { id:"barnagomba",     name:"Barna Csiperke",    img:"zold/barnacsiperke.jpg", unit:"0,5 kg/csomag" },
+          { id:"laska",          name:"Laskagomba",        img:"zold/laska.jpg",         unit:"0,5 kg/csomag" },
+          { id:"shimei",         name:"Shimei fehér",      img:"zold/shimeji.jpg",       unit:"150 g/csomag" },
+          { id:"shimeibarna",    name:"Shimei barna",      img:"zold/barnashimeji.jpeg", unit:"150 g/csomag" },
+          { id:"ordog",          name:"Ördögszekér gomba", img:"zold/ordog.jpg",         unit:"4 kg/csomag" },
+          { id:"shitake",        name:"Shiitake gomba",    img:"zold/shitake.jpg",       unit:"0,5 kg/csomag" }
         ]}
       ]
     },
@@ -369,46 +379,46 @@
       id: "gyumolcs", label: "Gyümölcsök", gridId: "grid-gyumolcs",
       groups: [
         { label: "Almafélék", items: [
-          { id:"gala",   name:"Alma apró/iskolás", img:"gyum/gala.jpg",  unit:"kg" },
-          { id:"golden", name:"Alma Pink Lady",       img:"gyum/golden.jpg",unit:"kg" },
-          { id:"grany",  name:"Alma Grany Smith",  img:"gyum/grany.jpg", unit:"kg" },
-          { id:"ida",    name:"Alma Idared",       img:"gyum/ida.jpg",   unit:"kg" }
+          { id:"gala",   name:"Alma apró/iskolás", img:"gyum/gala.jpg",   unit:"kg" },
+          { id:"pink",   name:"Alma Pink Lady",    img:"gyum/golden.jpg", unit:"kg" },
+          { id:"grany",  name:"Alma Grany Smith",  img:"gyum/grany.jpg",  unit:"kg" },
+          { id:"ida",    name:"Alma Idared",       img:"gyum/ida.jpg",    unit:"kg" }
         ]},
         { label: "Citrusfélék", items: [
-          { id:"citrom",      name:"Citrom",    img:"gyum/citrom.jpg", unit:"kg" },
-          { id:"grapefruit",  name:"Grapefruit",img:"gyum/grapefruit.jpg",unit:"kg" },
-          { id:"lime",        name:"Lime",      img:"gyum/lime.jpg",   unit:"kg" },
-          { id:"mandi",       name:"Mandarin",  img:"gyum/mandi.jpg",  unit:"kg" },
-          { id:"nari",        name:"Narancs",   img:"gyum/nari.jpg",   unit:"kg" }
+          { id:"citrom",      name:"Citrom",     img:"gyum/citrom.jpg",     unit:"kg" },
+          { id:"grapefruit",  name:"Grapefruit", img:"gyum/grapefruit.jpg", unit:"kg" },
+          { id:"lime",        name:"Lime",       img:"gyum/lime.jpg",       unit:"kg" },
+          { id:"mandi",       name:"Mandarin",   img:"gyum/mandi.jpg",      unit:"kg" },
+          { id:"nari",        name:"Narancs",    img:"gyum/nari.jpg",       unit:"kg" }
         ]},
         { label: "Bogyósok", items: [
-          { id:"afonya", name:"Áfonya", img:"gyum/afonya.jpg", unit:"125g/doboz" },
-          { id:"eper",   name:"Eper",   img:"gyum/eper.jpg",   unit:"kg" },
-          { id:"malna",  name:"Málna",  img:"gyum/malna.jpg",  unit:"125g/doboz" },
-          { id:"ribizli",name:"Ribizli",img:"gyum/ribizli.jpg",unit:"125g/doboz" }
+          { id:"afonya",  name:"Áfonya",  img:"gyum/afonya.jpg",  unit:"125 g/doboz" },
+          { id:"szeder",  name:"Szeder",  img:"gyum/szeder.png",  unit:"125 g/doboz" },
+          { id:"malna",   name:"Málna",   img:"gyum/malna.jpg",   unit:"125 g/doboz" },
+          { id:"ribizli", name:"Ribizli", img:"gyum/ribizli.jpg", unit:"125 g/doboz" }
         ]},
         { label: "Dinnyék", items: [
           { id:"gorogd",  name:"Görög dinnye", img:"gyum/gorogd.jpg",  unit:"kg" },
           { id:"sargadi", name:"Sárgadinnye",  img:"gyum/sargadi.jpg", unit:"kg" }
         ]},
         { label: "Trópusi gyümölcsök", items: [
-          { id:"ana",       name:"Ananász", img:"gyum/ana.jpg", unit:"db" },
-          { id:"avo",       name:"Avokádó", img:"gyum/avo.jpg", unit:"db" },
-          { id:"hassavo",   name:"Avokádó Haas (konyhakész)", img:"gyum/hassavo.jpg", unit:"db" },
-          { id:"banan",     name:"Banán",   img:"gyum/banan.jpg",unit:"kg" },
-          { id:"kiwi",      name:"Kiwi",    img:"gyum/kiwi.jpg", unit:"kg" },
-          { id:"passion",   name:"Passion Fruit",   img:"gyum/passion.jpg",   unit:"kg" },
-          { id:"mangó",     name:"Mangó",   img:"gyum/mango.jpg",   unit:"db" },
-          { id:"karambola", name:"Karambola",   img:"gyum/karambola.jpg",   unit:"db" }
+          { id:"ana",       name:"Ananász",                   img:"gyum/ana.jpg",       unit:"db" },
+          { id:"avo",       name:"Avokádó",                   img:"gyum/avo.jpg",       unit:"db" },
+          { id:"hassavo",   name:"Avokádó Haas (konyhakész)", img:"gyum/hassavo.jpg",   unit:"db" },
+          { id:"banan",     name:"Banán",                     img:"gyum/banan.jpg",     unit:"kg" },
+          { id:"kiwi",      name:"Kiwi",                      img:"gyum/kiwi.jpg",      unit:"kg" },
+          { id:"passion",   name:"Passion Fruit",             img:"gyum/passion.jpg",   unit:"kg" },
+          { id:"mangó",     name:"Mangó",                     img:"gyum/mango.jpg",     unit:"db" },
+          { id:"karambola", name:"Karambola",                 img:"gyum/karambola.jpg", unit:"db" }
         ]},
         { label: "Egyéb gyümölcsök", items: [
-          { id:"granat", name:"Gránátalma",img:"gyum/granat.jpg",unit:"db" },
-          { id:"korte",  name:"Körte",    img:"gyum/korte.jpg", unit:"kg" },
-          { id:"neki",   name:"Nektarin", img:"gyum/neki.jpg",  unit:"kg" },
-          { id:"oszi",   name:"Őszibarack", img:"gyum/oszi.jpg",  unit:"kg" },
-          { id:"sargab", name:"Sárgabarack", img:"gyum/sargab.jpg",  unit:"kg" },
-          { id:"szolo",  name:"Szőlő",   img:"gyum/szolo.jpg", unit:"kg" },
-          { id:"szilva", name:"Szilva",   img:"gyum/szilva.jpg", unit:"kg" }
+          { id:"granat", name:"Gránátalma", img:"gyum/granat.jpg", unit:"db" },
+          { id:"korte",  name:"Körte",      img:"gyum/korte.jpg",  unit:"kg" },
+          { id:"neki",   name:"Nektarin",   img:"gyum/neki.jpg",   unit:"kg" },
+          { id:"oszi",   name:"Őszibarack", img:"gyum/oszi.jpg",   unit:"kg" },
+          { id:"sargab", name:"Sárgabarack",img:"gyum/sargab.jpg", unit:"kg" },
+          { id:"szolo",  name:"Szőlő",      img:"gyum/szolo.jpg",  unit:"kg" },
+          { id:"szilva", name:"Szilva",     img:"gyum/szilva.jpg", unit:"kg" }
         ]}
       ]
     },
@@ -416,10 +426,14 @@
       id: "fuszer", label: "Fűszerek, csírák", gridId: "grid-fuszer",
       groups: [
         { label: "Csírák", items: [
-          { id:"retekcsira", name:"Retek csíra", img:"csir/retekcsira.jpg", unit:"doboz" },
-          { id:"hagymacsira", name:"Hagyma csíra", img:"csir/hagymacsira.png", unit:"doboz" },
-          { id:"borsocsira", name:"Borsó hajtás csíra", img:"csir/borsocsira.jpg", unit:"doboz" },
-          { id:"ehetovirag", name:"Ehető virág", img:"csir/virag.jpg", unit:"doboz" },
+          { id:"retekcsira",  name:"Retek csíra",        img:"csir/retekcsira.jpg",  unit:"doboz" },
+          { id:"hagymacsira", name:"Hagyma csíra",       img:"csir/hagymacsira.png", unit:"doboz" },
+          { id:"borsocsira",  name:"Borsó hajtás csíra", img:"csir/borsocsira.jpg",  unit:"doboz" },
+          { id:"mikromix",    name:"MikroMix borsó hajtás", img:"csir/mikromix.png", unit:"60 g/doboz" },
+          { id:"ehetovirag",  name:"Ehető virág",        img:"csir/virag.jpg",       unit:"doboz" },
+          { id:"ceruzabab",   name:"Ceruzabab",          img:"csir/ceruzabab.jpeg",  unit:"doboz" },
+          { id:"cukorborso",  name:"Cukorborsó",         img:"csir/cukorborso.jpg",  unit:"doboz" },
+          { id:"citromnad",   name:"Citromnád",          img:"csir/citromnad.jpg",   unit:"500 g/doboz" }
         ]},
         { label: "Friss fűszerek", items: [
           { id:"bazsi",    name:"Bazsalikom",         img:"csir/bazsi.jpg",    unit:"köteg" },
@@ -438,38 +452,39 @@
       ]
     },
     {
-    id: "savanyu", label: "Savanyúságok", gridId: "grid-savanyu",
-    groups: [
-      { label: "Paprikák", items: [
-        { id:"simalmapap", name:"Almapaprika",         img:"sav/simalmapap.jpg", unit:"5 / 10 kg"},
-        { id:"almapap",    name:"Töltött almapaprika", img:"sav/almapap.jpg",   unit:"5 / 10 kg"},
-        { id:"cseresznyepaprika",    name:"Cseresznyepaprika", img:"sav/cseresznyepaprika.jpg", unit:"5 / 10 kg" },
-        { id:"pepperoni",    name:"Pepperoni", img:"sav/pepperoni.jpg",  unit:"5 / 10 kg" },
-      ]},
-      { label: "Uborkák", items: [
-        { id:"csem", name:"Csemege uborka", img:"sav/csemubi.jpg",  unit:"5 / 10 kg"},
-        { id:"kovi", name:"Kovászos uborka",img:"sav/koviubi.jpg",  unit:"5 / 10 kg"}
-      ]},
-      { label: "Káposztafélék", items: [
-        { id:"csala",  name:"Csalamádé",        img:"sav/vegyees.jpg",   unit:"5 / 15 kg"},
-        { id:"kaposztasalata",  name:"Káposztasaláta",        img:"sav/kaposztasalata.jpg",  unit:"5 / 15 kg" },
-        { id:"savkap", name:"Savanyú Káposzta", img:"sav/savkap.jpg",  unit:"1 / 5 / 17 kg" }
-      ]},
-      { label: "Egyéb", items: [
-        { id:"cekla-s", name:"Cékla",        img:"sav/cekla.jpg", unit:"5 / 15 kg"},
-        { id:"karfiol", name:"Ecetes karfiol",        img:"sav/karfiol.jpg", unit:"5 / 10 kg"},
-        { id:"torma", name:"Torma",        img:"sav/torma.jpg",   unit:"500 g"},
-        { id:"gyongy",  name:"Gyöngyhagyma", img:"sav/gyongy.jpg",  unit:"5 / 10 kg"}
-      ]}
-    ]
-  },
+      id: "savanyu", label: "Savanyúságok", gridId: "grid-savanyu",
+      groups: [
+        { label: "Paprikák", items: [
+          { id:"simalmapap",        name:"Almapaprika",         img:"sav/simalmapap.jpg",        unit:"5 / 10 kg" },
+          { id:"almapap",           name:"Töltött almapaprika", img:"sav/almapap.jpg",           unit:"5 / 10 kg" },
+          { id:"cseresznyepaprika", name:"Cseresznyepaprika",   img:"sav/cseresznyepaprika.jpg", unit:"5 / 10 kg" },
+          { id:"pepperoni",         name:"Pepperoni",           img:"sav/pepperoni.jpg",         unit:"5 / 10 kg" }
+        ]},
+        { label: "Uborkák", items: [
+          { id:"csem", name:"Csemege uborka",  img:"sav/csemubi.jpg", unit:"5 / 10 kg" },
+          { id:"kovi", name:"Kovászos uborka", img:"sav/koviubi.jpg", unit:"5 / 10 kg" }
+        ]},
+        { label: "Káposztafélék", items: [
+          { id:"csala",           name:"Csalamádé",            img:"sav/vegyees.jpg",          unit:"5 / 15 kg" },
+          { id:"kaposztasalata",  name:"Káposztasaláta",       img:"sav/kaposztasalata.jpg",   unit:"5 / 15 kg" },
+          { id:"savkap",          name:"Savanyú Káposzta",     img:"sav/savkap.jpg",           unit:"1 / 5 / 17 kg" },
+          { id:"sav_fej",         name:"Savanyú Káposzta Fej", img:"sav/sav_fej.jpg",          unit:"1 / 5 / 17 kg" }
+        ]},
+        { label: "Egyéb", items: [
+          { id:"cekla-s", name:"Cékla",         img:"sav/cekla.jpg",  unit:"5 / 15 kg" },
+          { id:"karfiol", name:"Ecetes karfiol",img:"sav/karfiol.jpg",unit:"5 / 15 kg" },
+          { id:"torma",   name:"Torma",         img:"sav/torma.jpg",  unit:"5 / 15 kg" },
+          { id:"gyongy",  name:"Gyöngyhagyma",  img:"sav/gyongy.jpg", unit:"5 / 10 kg" }
+        ]}
+      ]
+    },
     {
       id: "salatak", label: "Saláták", gridId: "grid-salatak",
       groups: [
         { label: "Saláták", items: [
-          { id:"jegsalata",  name:"Jégsaláta",       img:"sals/jeg.jpg",          unit:"db" },
-          { id:"fejes",      name:"Fejes saláta",       img:"sals/fejes.jpg",          unit:"db" },
-          { id:"lollo",      name:"Lollo saláta zöld",       img:"sals/lollo.jpg",          unit:"db" },
+          { id:"jegsalata",  name:"Jégsaláta",        img:"sals/jeg.jpg",          unit:"db" },
+          { id:"fejes",      name:"Fejes saláta",     img:"sals/fejes.jpg",        unit:"db" },
+          { id:"lollo",      name:"Lollo saláta zöld",img:"sals/lollo.jpg",        unit:"db" },
           { id:"madar",      name:"Madársaláta",      img:"sals/madar.jpg",        unit:"doboz" },
           { id:"rukkola",    name:"Rukkola",          img:"sals/rukkola.jpg",      unit:"doboz" },
           { id:"ceklalevél", name:"Céklalevél",       img:"sals/cekla.jpg",        unit:"doboz" },
@@ -493,10 +508,12 @@
           { id:"t-burgonya-parazs", name:"Burgonya Parázs",img:"tisz/burgonya-parazs.jpg",    unit:"kg" }
         ]},
         { label: "Káposztafélék", items: [
-          { id:"t-fejeskaposzta-reszelt", name:"Fejeskáposzta Reszelt",img:"tisz/fejeskaposzta-reszelt.jpg",    unit:"kg" },
-          { id:"t-fejeskaposzta-csik",    name:"Fejeskáposzta Csík",   img:"tisz/fejeskaposzta-vastag-csik.jpg",unit:"kg" },
-          { id:"t-kelkaposzta-csik",      name:"Kelkáposzta Csík",     img:"tisz/kelkaposzta-vastag-csik.jpg",  unit:"kg" },
-          { id:"t-lilakaposzta-csik",     name:"Lilakáposzta Csík",    img:"tisz/voroskaposzta-vekony-csik.jpg",unit:"kg" }
+          { id:"t-fejeskaposzta-reszelt", name:"Fejeskáposzta Reszelt",   img:"tisz/fejeskaposzta-reszelt.jpg",    unit:"kg" },
+          { id:"t-fejeskaposzta-csik",    name:"Fejeskáposzta Csík",      img:"tisz/fejeskaposzta-vastag-csik.jpg",unit:"kg" },
+          { id:"t-kelkaposzta-csik",      name:"Kelkáposzta Csík",        img:"tisz/kelkaposzta-vastag-csik.jpg",  unit:"kg" },
+          { id:"t-lilakaposzta-csik",     name:"Lilakáposzta Csík",       img:"tisz/voroskaposzta-vekony-csik.jpg",unit:"kg" },
+          { id:"fejes_szelet",            name:"Fejeskáposzta Szeletelve",img:"tisz/fejes_szelet.jpg",             unit:"kg" },
+          { id:"kel_szelet",              name:"Kelkáposzta Szeletelve",  img:"tisz/kel_szelet.jpg",               unit:"kg" }
         ]},
         { label: "Gyökérzöldségek", items: [
           { id:"t-zeller-egesz",         name:"Zeller Egész",        img:"tisz/zeller-egesz.jpg",         unit:"kg" },
@@ -508,11 +525,11 @@
           { id:"t-petrezselyem-kocka",   name:"Petrezselyem Kocka",  img:"tisz/petrezselyem-kiskocka.jpg",unit:"kg" }
         ]},
         { label: "Hagymafélék", items: [
-          { id:"t-voroshagyma-egesz",  name:"Vöröshagyma Egész",  img:"tisz/voroshagyma-egesz.jpg",  unit:"kg" },
-          { id:"t-voroshagyma-karika", name:"Vöröshagyma Karika", img:"tisz/voroshagyma-karika.jpg", unit:"kg" },
-          { id:"t-lilahagyma-egesz",   name:"Lilahagyma Egész",   img:"tisz/lilahagyma-egesz.jpg",   unit:"kg" },
-          { id:"t-lilahagyma-karika",  name:"Lilahagyma Karika",  img:"tisz/lilahagyma-karika.jpg",  unit:"kg" },
-          { id:"t-foki",  name:"Fokhagyma tisztított",  img:"tisz/foki.jpg",  unit:"kg" }
+          { id:"t-voroshagyma-egesz",  name:"Vöröshagyma Egész",   img:"tisz/voroshagyma-egesz.jpg",  unit:"kg" },
+          { id:"t-voroshagyma-karika", name:"Vöröshagyma Karika",  img:"tisz/voroshagyma-karika.jpg", unit:"kg" },
+          { id:"t-lilahagyma-egesz",   name:"Lilahagyma Egész",    img:"tisz/lilahagyma-egesz.jpg",   unit:"kg" },
+          { id:"t-lilahagyma-karika",  name:"Lilahagyma Karika",   img:"tisz/lilahagyma-karika.jpg",  unit:"kg" },
+          { id:"t-foki",               name:"Fokhagyma tisztított",img:"tisz/foki.jpg",               unit:"kg" }
         ]}
       ]
     },
@@ -520,8 +537,54 @@
       id: "tojas", label: "Tojás", gridId: "grid-tojas",
       groups: [
         { label: "Tojások", items: [
-          { id:"talcas", name:"Friss tojás M-es", img:"tojas/talca30.jpg",     unit:"db" },
-          { id:"furj",   name:"Fürj tojás 24db",img:"tojas/furj.jpg",    unit:"csomag" }
+          { id:"talcas",  name:"Friss tálcás tojás M-es",  img:"tojas/talca30.jpg", unit:"db (30-as tálca)" },
+          { id:"karton",  name:"Friss tojás M-es karton",  img:"tojas/karton.jpg",  unit:"360 db/karton" },
+          { id:"dobozos", name:"Friss dobozos tojás M-es", img:"tojas/dobozos.jpg", unit:"doboz" },
+          { id:"furj",    name:"Fürj tojás",               img:"tojas/furj.jpg",    unit:"24 db/csomag" }
+        ]}
+      ]
+    },
+    {
+      id: "szarazaru", label: "Szárazáru", gridId: "grid-szarazaru",
+      groups: [
+        { label: "Diófélék", items: [
+          { id:"diobel",              name:"Dióbél",                  img:"szarazaru/diobel.jpg",              unit:"kg" },
+          { id:"daraltdio",           name:"Darált dió",              img:"szarazaru/daraltdio.jpg",           unit:"kg" },
+          { id:"mandulabel",          name:"Mandulabél, hántolatlan", img:"szarazaru/mandulabel.jpg",          unit:"kg" },
+          { id:"mandulabelszeletelt", name:"Mandulabél, szeletelt",   img:"szarazaru/mandulabelszeletelt.jpg", unit:"kg" },
+          { id:"kesudio",             name:"Kesudió",                 img:"szarazaru/kesudio.jpg",             unit:"1 kg/csomag" },
+          { id:"pisztacia",           name:"Pisztácia héjas",         img:"szarazaru/pisztacia.jpg",           unit:"1 kg/csomag" },
+          { id:"pekandio",            name:"Pekándió",                img:"szarazaru/pekandio.jpg",            unit:"1 kg/csomag" },
+          { id:"torokmogyoro",        name:"Törökmogyoró",            img:"szarazaru/torokmogyoro.jpg",        unit:"1 kg/csomag" }
+        ]},
+        { label: "Magvak", items: [
+          { id:"mak",  name:"Darált mák", img:"szarazaru/mak.jpg",  unit:"kg" },
+          { id:"chia", name:"Chia mag",   img:"szarazaru/chia.jpg", unit:"1 / 5 kg" }
+        ]},
+        { label: "Hüvelyesek", items: [
+          { id:"tarkabab",     name:"Tarkabab",              img:"szarazaru/tarkabab.jpg",     unit:"500 g / 5 kg" },
+          { id:"lencse",       name:"Lencse",                img:"szarazaru/lencse.jpg",       unit:"500 g / 5 kg" },
+          { id:"voroslencse",  name:"Vöröslencse",           img:"szarazaru/voroslencse.jpg",  unit:"1 / 5 kg" },
+          { id:"feketelencse", name:"Fekete lencse, Beluga", img:"szarazaru/feketelencse.jpg", unit:"1 / 5 kg" },
+          { id:"csicseri",     name:"Csicseriborsó",         img:"szarazaru/csicseri.jpg",     unit:"1 / 5 kg" },
+          { id:"sargaborso",   name:"Sárgaborsó",            img:"szarazaru/sargaborso.jpg",   unit:"5 kg/csomag" },
+          { id:"feherbab",     name:"Fehérbab",              img:"szarazaru/feherbab.jpg",     unit:"5 kg/csomag" },
+          { id:"gyongybab",    name:"Gyöngybab",             img:"szarazaru/gyongybab.jpg",    unit:"5 kg/csomag" },
+          { id:"feketebab",    name:"Feketebab",             img:"szarazaru/feketebab.jpg",    unit:"1 / 5 kg" }
+        ]},
+        { label: "Gabonafélék", items: [
+          { id:"bulgur",         name:"Bulgur",           img:"szarazaru/burlgur.jpg",         unit:"1 / 5 kg" },
+          { id:"koles",          name:"Köles",            img:"szarazaru/koles.jpg",           unit:"1 / 5 kg" },
+          { id:"hajdina",        name:"Hajdina",          img:"szarazaru/hajdina.jpg",         unit:"natúr / pörkölt" },
+          { id:"csoveskukorica", name:"Csemege kukorica", img:"szarazaru/csemegekukorica.jpg", unit:"db" }
+        ]},
+        { label: "Aszalványok", items: [
+          { id:"bananchips",   name:"Banánchips",         img:"szarazaru/bananchips.jpg",   unit:"kg" },
+          { id:"aranymazsola", name:"Arany mazsola",      img:"szarazaru/aranymazsola.jpg", unit:"1 / 5 kg" },
+          { id:"aszaltbarack", name:"Aszalt sárgabarack", img:"szarazaru/aszaltbarack.jpg", unit:"kg" },
+          { id:"aszaltszilva", name:"Aszalt szilva",      img:"szarazaru/aszaltszilva.jpg", unit:"kg" },
+          { id:"aszaltafonya", name:"Aszalt vörös áfonya",img:"szarazaru/aszaltafonya.jpg", unit:"kg" },
+          { id:"mazsola",      name:"Mazsola",            img:"szarazaru/mazsola.jpg",      unit:"100 g/csomag" }
         ]}
       ]
     }
@@ -563,6 +626,7 @@
   function buildGrids() {
     CATALOG.forEach(function(cat) {
       const target = document.getElementById(cat.gridId);
+      if (!target) return;
       let html = '';
       cat.groups.forEach(function(grp) {
         html += '<div class="subcat-header w-100">' + grp.label + '</div>';
