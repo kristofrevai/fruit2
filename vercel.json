@@ -1,5 +1,6 @@
 {
   "redirects": [
-    { "source": "/termeklista", "destination": "/webshop/", "permanent": true }
+    { "source": "/termeklista", "destination": "/webshop/", "permanent": true },
+    { "source": "/termeklista/", "destination": "/webshop/", "permanent": true }
   ]
 }
