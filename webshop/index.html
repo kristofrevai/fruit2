@@ -796,14 +796,31 @@ body.user-logged-in .hero-guest-only{display:none;}
 .hero-step p{margin:0;font-size:14px;line-height:1.7;color:#6b6b6b;}
 
 @media (max-width:1199.98px){
-  .hero-main{padding:48px 40px 38px;gap:36px;}
+  .hero-main{
+    grid-template-columns:minmax(0,1fr);
+    gap:32px;padding:46px 40px 38px;align-items:start;
+  }
+  .hero-title{font-size:clamp(30px,4.4vw,44px);}
+  .hero-lead{max-width:620px;}
   .hero-rail{padding:15px 40px;}
-  .hero-scene{--panel-w:172px;--panel-h:226px;height:380px;}
+  .hero-visual{min-width:0;width:100%;}
+
+  .hero-scene{
+    --pw:184px; --ph:242px;
+    --panel-w:var(--pw); --panel-h:var(--ph);
+    height:404px;perspective:1400px;
+  }
+  .hero-scene::after{
+    top:calc(50% + var(--panel-h) / 2 + 79px);
+    width:min(78%, calc(var(--panel-w) * 2.1));
+    height:clamp(16px, calc(var(--panel-h) * .11), 28px);
+  }
 }
 @media (max-width:991.98px){
-  .hero-main{grid-template-columns:1fr;gap:34px;}
+  .hero-main{gap:30px;padding:42px 30px 34px;}
   .hero-lead{max-width:none;}
-  .hero-scene{--panel-w:196px;--panel-h:258px;height:410px;}
+  .hero-rail{padding:15px 30px;}
+  .hero-scene{--pw:172px;--ph:226px;height:384px;perspective:1300px;}
   .hr-cut{margin-left:0;width:100%;}
 }
 @media (max-width:767.98px){
@@ -815,7 +832,8 @@ body.user-logged-in .hero-guest-only{display:none;}
   .hero-btn{padding:12px 20px;font-size:13px;flex:1 1 auto;}
   .hero-facts{margin-top:22px;gap:9px;}
   .hero-facts li{font-size:13px;}
-  .hero-scene{--panel-w:124px;--panel-h:164px;height:262px;perspective:1000px;}
+  .hero-visual{margin-left:-22px;margin-right:-22px;width:calc(100% + 44px);}
+  .hero-scene{--pw:132px;--ph:174px;height:278px;perspective:1000px;}
   .hero-panel{border-radius:14px;}
   .hp-label{font-size:12px;}
   .hp-meta{font-size:9px;letter-spacing:1.2px;}
@@ -825,9 +843,18 @@ body.user-logged-in .hero-guest-only{display:none;}
   .hr-day{min-width:0;padding:6px 11px;}
   .hero-steps{grid-template-columns:1fr;gap:20px;margin-top:28px;}
   .hero-step{padding-top:14px;}
+  .hero-scene::after{display:none;}
 }
 @media (max-width:400px){
-  .hero-scene{--panel-w:106px;--panel-h:140px;height:230px;}
+  .hero-scene{--pw:110px;--ph:145px;height:240px;}
+}
+
+@media (hover:none){
+  .hero-panel:hover{
+    border-color:var(--line);
+    box-shadow:0 18px 38px rgba(22,33,26,.13);
+    transform:rotateY(calc(var(--i) * var(--step))) translateZ(var(--radius));
+  }
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -880,7 +907,7 @@ body:not(.user-approved) .policy-private { display:none !important; }
       <ul class="menu">
         <li><a href="https://revaifruitkft.hu/">KEZDŐLAP</a></li>
         <li><a href="https://revaifruitkft.hu/tisztitott">TISZTÍTOTT ZÖLDSÉGEK</a></li>
-        <li><a href="https://revaifruitkft.hu/webshop">WEBÁRUHÁZ</a></li>
+        <li><a href="https://revaifruitkft.hu/termeklista">TERMÉKLISTA</a></li>
         <li><a href="https://revaifruitkft.hu/referenciak">REFERENCIÁK</a></li>
         <li><a href="https://revaifruitkft.hu/kapcsolat">KAPCSOLAT</a></li>
         <li><a href="https://revaifruitkft.hu/galeria">GALÉRIA</a></li>
@@ -1017,8 +1044,8 @@ body:not(.user-approved) .policy-private { display:none !important; }
   <div class="container-fluid checkout-section-wrap py-5" id="rendeles">
     <div class="container">
       <div class="section-header text-center mb-4 wow fadeInUp" data-wow-delay="0.1s">
-        <h2 class="mb-3">Megrendelés és fizetés</h2>
-        <p>A kosár összeállítása után töltse ki az alábbi adatokat, válasszon szállítási napot, majd fizessen.</p>
+        <h2 class="mb-3">Megrendelés</h2>
+        <p>A kosár összeállítása után töltse ki az alábbi adatokat, majd válasszon szállítási napot.</p>
       </div>
 
       <form id="order-form" class="row g-4 wow fadeInUp" data-wow-delay="0.2s">
@@ -1174,7 +1201,7 @@ body:not(.user-approved) .policy-private { display:none !important; }
           <div class="fc-icon"><i class="fa fa-phone"></i></div>
           <div>
             <div class="fc-label">Kapcsolat</div>
-            <a class="fc-value" href="tel:+36302877988">+36 30 287 7988</a>
+            <a class="fc-value" href="tel:+36302877988">+36 30 140 6502</a>
           </div>
         </div>
         <div class="fc-divider"></div>
@@ -2459,12 +2486,69 @@ body:not(.user-approved) .policy-private { display:none !important; }
     if (!scene || !spin) return;
     var n = spin.children.length;
     if (n < 2) return;
-    var w = parseFloat(getComputedStyle(scene).getPropertyValue('--panel-w')) || 196;
-    var gap = n > 6 ? 20 : 30;
-    var r = Math.round((w + gap) / 2 / Math.tan(Math.PI / n));
 
-    r = Math.min(r, Math.round(scene.clientWidth / 2));
-    scene.style.setProperty('--radius', r + 'px');
+    var gap = n > 6 ? 20 : 30;
+
+    // 1200px felett minden marad az eredeti (asztali) logika szerint
+    var isTablet = window.matchMedia('(max-width:1199.98px)').matches;
+    if (!isTablet) {
+      scene.style.removeProperty('--panel-w');
+      scene.style.removeProperty('--panel-h');
+      var w = parseFloat(getComputedStyle(scene).getPropertyValue('--panel-w')) || 196;
+      var r = Math.round((w + gap) / 2 / Math.tan(Math.PI / n));
+      r = Math.min(r, Math.round(scene.clientWidth / 2));
+      scene.style.setProperty('--radius', r + 'px');
+      scene.style.setProperty('--step', (360 / n) + 'deg');
+      return;
+    }
+
+    // Tablet es lefele: a gyurut ugy skalazzuk, hogy biztosan elferjen
+    var availW = scene.clientWidth;
+    var availH = scene.clientHeight;
+    if (!availW || !availH) return;
+
+    var cs = getComputedStyle(scene);
+    var baseW = parseFloat(cs.getPropertyValue('--pw')) || 184;
+    var baseH = parseFloat(cs.getPropertyValue('--ph')) || 242;
+    var persp = parseFloat(cs.perspective);
+    if (!isFinite(persp) || persp <= 0) persp = 1400;
+
+    var step  = (2 * Math.PI) / n;
+    var baseR = (baseW + gap) / 2 / Math.tan(Math.PI / n);
+
+    // A perspektiva miatt az elore fordulo lap nagyobbnak latszik, ezert a
+    // vetitett (kepernyon lathato) meretekkel szamolunk.
+    var limitX = availW / 2 - 10;  // oldalso tartalek
+    var limitY = availH - 40;      // hely az arnyeknak a gyuru alatt
+    if (limitX <= 0 || limitY <= 0) return;
+
+    function metrics(k){
+      var w = baseW * k, h = baseH * k, rr = baseR * k;
+      var maxX = 0;
+      for (var i = 0; i < n; i++){
+        var a = i * step;
+        var z = rr * Math.cos(a);
+        var denom = persp - z;
+        if (denom < 1) continue;
+        var sc = persp / denom;
+        var e = (Math.abs(rr * Math.sin(a)) + (w / 2) * Math.abs(Math.cos(a))) * sc;
+        if (e > maxX) maxX = e;
+      }
+      return { x: maxX, y: h * (persp / Math.max(1, persp - rr)) };
+    }
+
+    var k = 1;
+    for (var it = 0; it < 6; it++){
+      var m = metrics(k);
+      var over = Math.max(m.x / limitX, m.y / limitY);
+      if (over <= 1.001) break;
+      k = k / over;
+    }
+    k = Math.max(0.5, Math.min(1, k));
+
+    scene.style.setProperty('--panel-w', Math.round(baseW * k) + 'px');
+    scene.style.setProperty('--panel-h', Math.round(baseH * k) + 'px');
+    scene.style.setProperty('--radius',  Math.round(baseR * k) + 'px');
     scene.style.setProperty('--step', (360 / n) + 'deg');
   }
 
@@ -2554,10 +2638,18 @@ body:not(.user-approved) .policy-private { display:none !important; }
     scene.addEventListener('pointerleave', function(){ scene.style.perspectiveOrigin = ''; });
 
     var resizeTimer = null;
-    window.addEventListener('resize', function(){
+    function onResize(){
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(sizeHeroRing, 150);
-    });
+      resizeTimer = setTimeout(sizeHeroRing, 130);
+    }
+    window.addEventListener('resize', onResize);
+    window.addEventListener('orientationchange', function(){ setTimeout(sizeHeroRing, 250); });
+    if (window.ResizeObserver){
+      try { new ResizeObserver(onResize).observe(scene); } catch(_) {}
+    }
+    if (document.fonts && document.fonts.ready && document.fonts.ready.then){
+      document.fonts.ready.then(function(){ sizeHeroRing(); });
+    }
   }
 
   const HU_MONTH_SHORT = ['jan.','febr.','márc.','ápr.','máj.','jún.','júl.','aug.','szept.','okt.','nov.','dec.'];
