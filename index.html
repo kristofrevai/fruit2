@@ -7,13 +7,11 @@
 <title>Révai Fruit Kft. — Zöldség-gyümölcs kis és nagykereskedelem Heves megyében</title>
 <meta name="description" content="Révai Fruit Kft. — friss zöldség-gyümölcs kis és nagykereskedelem, éttermeknek szóló kiszállítás és konyhakész, tisztított termékek Heves megyében.">
 
-<!-- Kanonikus URL - jelzi a Google-nek, hogy ez az oldal "hivatalos" változata, elkerülve a duplikált tartalom miatti pontlevonást -->
 <link rel="canonical" href="https://revaifruitkft.hu/">
 
 <!-- Favicon -->
 <link href="asd.png" rel="icon">
 
-<!-- Open Graph - így néz ki a link előnézete, ha valaki megosztja Facebookon, Messengeren, WhatsAppon -->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="hu_HU">
 <meta property="og:site_name" content="Révai Fruit Kft.">
@@ -75,7 +73,7 @@
     }
   ],
   "sameAs": [
-    "[https://www.facebook.com/profile.php?id=100063596081084]",
+    "[https://www.facebook.com/profile.php?id=100063596081084]"
   ]
 }
 </script>
@@ -272,11 +270,15 @@
     z-index: 3;
   }
   .hero__actions{
+    position: absolute;
+    left: 50%;
+    bottom: 56px;
+    transform: translateX(-50%);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 14px;
-    padding: 0 24px 56px;
+    padding: 0 24px;
     max-width: 1100px;
     z-index: 4;
     width: 100%;
@@ -311,12 +313,11 @@
     border-color: #a52c26;
   }
 
-  /* SPECIÁLIS MOBIL FINOMHANGOLÁSOK TELEFONOKRA */
   @media (max-width: 640px){
     .hero{
       height: 100vh;
       height: 100dvh;
-      min-height: 560px; /* Megnövelt hely, hogy a logó, a menü és a gombok kényelmesen elférjenek egymás alatt */
+      min-height: 560px; 
     }
 
     .hero video{
@@ -326,14 +327,15 @@
     .hero__actions{
       flex-direction: column;
       width: 100%;
-      padding: 0 20px 32px; /* Kisebb alsó térköz, hogy a telefon alsó rendszersávja ne takarjon be */
+      bottom: 32px; 
+      padding: 0 20px;
       gap: 12px;
     }
 
     .hero__btn{
       width: 100%;
       padding: 15px 18px;
-      font-size: 12.5px; /* Optimális méret, hogy a hosszú magyar szavak (pl. nagykereskedelem) se törjenek csúnyán több sorba */
+      font-size: 12.5px; 
       letter-spacing: .05em;
     }
   }
@@ -350,7 +352,7 @@
     <ul>
       <li><a href="https://revaifruitkft.hu/">Kezdőlap</a></li>
       <li><a href="https://revaifruitkft.hu/tisztitott">Tisztított Zöldségek</a></li>
-      <li><a href="https://revaifruitkft.hu/webshop">Webáruház</a></li>
+      <li><a href="https://revaifruitkft.hu/webshop" id="navWebshopLink">Webáruház</a></li>
       <li><a href="https://revaifruitkft.hu/referenciak/">Referenciák</a></li>
       <li><a href="https://revaifruitkft.hu/kapcsolat/">Kapcsolat</a></li>
       <li><a href="https://revaifruitkft.hu/galeria/">Galéria</a></li>
@@ -370,7 +372,7 @@
 
   <div class="hero__actions">
     <a class="hero__btn" href="https://revaifruitkft.hu/kiszallitas">Zöldség-gyümölcs kiszállítás</a>
-    <a class="hero__btn hero__btn--primary" href="https://revaifruitkft.hu/webshop/">Webáruház</a>
+    <a class="hero__btn hero__btn--primary" href="https://revaifruitkft.hu/webshop/" id="heroWebshopBtn">Webáruház</a>
     <a class="hero__btn" href="https://revaifruitkft.hu/tisztitott">Konyhakész termékek</a>
   </div>
 </section>
@@ -390,7 +392,6 @@
 
     videoElement.load();
   }
-  // Fejléc háttere görgetéskor
   const header = document.getElementById('siteHeader');
   const onScroll = () => {
     if (window.scrollY > 40) header.classList.add('scrolled');
@@ -399,7 +400,6 @@
   window.addEventListener('scroll', onScroll);
   onScroll();
 
-  // Háttérvideó diagnosztika
   const heroVideo = document.getElementById('heroVideo');
   if (heroVideo) {
     heroVideo.addEventListener('loadeddata', () => {
@@ -411,13 +411,45 @@
     });
   }
 
-  // Mobil menü nyitás/zárás
   const navToggle = document.getElementById('navToggle');
   const mainNav = document.getElementById('mainNav');
   navToggle.addEventListener('click', () => {
     const isOpen = mainNav.classList.toggle('open');
     navToggle.setAttribute('aria-expanded', isOpen);
   });
+
+  function alignHeroWebshopButton(){
+    const actions = document.querySelector('.hero__actions');
+    if (!actions) return;
+
+    actions.style.transform = 'translateX(-50%)';
+    if (window.innerWidth <= 960) return;
+
+    const navLink = document.getElementById('navWebshopLink');
+    const heroBtn = document.getElementById('heroWebshopBtn');
+    if (!navLink || !heroBtn) return;
+
+    const navRect = navLink.getBoundingClientRect();
+    const btnRect = heroBtn.getBoundingClientRect();
+    if (!navRect.width || !btnRect.width) return;
+
+    const navCenter = navRect.left + navRect.width / 2;
+    const btnCenter = btnRect.left + btnRect.width / 2;
+    const delta = Math.round(navCenter - btnCenter);
+
+    actions.style.transform = `translateX(calc(-50% + ${delta}px))`;
+  }
+
+  let alignResizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(alignResizeTimer);
+    alignResizeTimer = setTimeout(alignHeroWebshopButton, 120);
+  });
+  window.addEventListener('load', alignHeroWebshopButton);
+  if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
+    document.fonts.ready.then(alignHeroWebshopButton);
+  }
+  alignHeroWebshopButton();
 </script>
 
 </body>
