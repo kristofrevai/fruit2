@@ -254,6 +254,7 @@
 
     .gal-lightbox-figure {
       position: relative;
+      z-index: 1;
       max-width: min(92vw, 1100px);
       max-height: 88vh;
       display: flex;
@@ -290,6 +291,7 @@
     .gal-lightbox-prev,
     .gal-lightbox-next {
       position: fixed;
+      z-index: 2;
       border: 1px solid rgba(255, 255, 255, .3);
       background: rgba(255, 255, 255, .08);
       color: #fff;
@@ -330,9 +332,6 @@
   </style>
 
   <style>
-    /* ═══════════════════════════════════════════════════════════════
-       ZÁRÓ SÁV (ugyanaz a minta, mint a többi aloldalon)
-       ═══════════════════════════════════════════════════════════════ */
     .gal-cta { background: var(--paper-3); border-top: 1px solid var(--line); }
     .gal-cta-inner {
       display: flex;
@@ -369,9 +368,6 @@
     .gal-btn-ghost:hover { background: #FFF3E6; border-color: #FFCF9E; color: var(--orange); }
     .gal-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
 
-    /* ═══════════════════════════════════════════════════════════════
-       GÖRGETÉSRE MEGJELENÉS
-       ═══════════════════════════════════════════════════════════════ */
     .gal-rise {
       opacity: 0;
       transform: translateY(18px);
@@ -462,9 +458,6 @@
 
   <main class="gal">
 
-    <!-- ═══════════════════════════════════════════════════════════
-         BEVEZETŐ
-         ═══════════════════════════════════════════════════════════ -->
     <section class="gal-intro">
       <div class="gal-container">
         <div class="gal-intro-inner gal-rise">
@@ -602,7 +595,6 @@
     nextBtn.addEventListener('click', next);
     prevBtn.addEventListener('click', prev);
 
-    // Háttérre kattintva is zárjon - de a kép/gombok kattintása ne.
     lightbox.addEventListener('click', function (e) {
       if (e.target === lightbox) close();
     });
