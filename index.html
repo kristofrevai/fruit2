@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hu">
 <head>
 <meta charset="UTF-8">
@@ -9,7 +9,6 @@
 
 <link rel="canonical" href="https://revaifruitkft.hu/">
 
-<!-- Favicon -->
 <link href="asd.png" rel="icon">
 
 <meta property="og:type" content="website">
@@ -20,7 +19,6 @@
 <meta property="og:url" content="https://revaifruitkft.hu/">
 <meta property="og:image" content="https://revaifruitkft.hu/asd.png">
 
-<!-- Twitter/X kártya -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Révai Fruit Kft. — Zöldség-gyümölcs nagykereskedelem Heves megyében">
 <meta name="twitter:description" content="Friss zöldség-gyümölcs nagykereskedelem, éttermeknek szóló kiszállítás és konyhakész, tisztított termékek Heves megyében.">
@@ -29,7 +27,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 
 <script type="application/ld+json">
 {
@@ -97,6 +94,7 @@
     color: var(--charcoal);
     background: var(--cream);
   }
+  body.nav-locked{ overflow: hidden; }
 
   a{ text-decoration: none; color: inherit; }
   ul{ list-style: none; margin: 0; padding: 0; }
@@ -111,7 +109,6 @@
     border: 0;
   }
 
-  /* ---------- HEADER ---------- */
   .site-header{
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -184,61 +181,173 @@
   }
   .main-nav a:hover::after{ width: 100%; }
 
+  .main-nav__foot{ display: none; }
+
+  .nav-backdrop{
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    background: rgba(11,22,13,.55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .35s ease;
+  }
+
   .nav-toggle{
     display: none;
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 4;
+    width: 46px;
+    height: 46px;
     flex-direction: column;
-    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
     background: none;
     border: 0;
     cursor: pointer;
-    padding: 6px;
-    position: absolute;
-    right: 24px;
-    top: 30px;
+    padding: 0;
   }
   .nav-toggle span{
+    display: block;
     width: 26px;
     height: 2px;
+    border-radius: 2px;
     background: var(--white);
-    transition: background .3s ease;
+    transition: transform .32s cubic-bezier(.22,.61,.36,1), opacity .2s ease, background .3s ease;
   }
   .site-header.scrolled .nav-toggle span{ background: var(--charcoal); }
+  .site-header .nav-toggle.open span{ background: var(--cream); }
+  .site-header .nav-toggle.open span:nth-child(1){ transform: translateY(8px) rotate(45deg); }
+  .site-header .nav-toggle.open span:nth-child(2){ opacity: 0; transform: scaleX(.4); }
+  .site-header .nav-toggle.open span:nth-child(3){ transform: translateY(-8px) rotate(-45deg); }
+
+  .nav-toggle:focus-visible,
+  .main-nav a:focus-visible{
+    outline: 2px solid var(--tomato);
+    outline-offset: 4px;
+  }
 
   @media (max-width: 960px){
-    .site-header{ padding: 18px 24px 14px; align-items: flex-start; }
-    .site-header__logo{ align-self: center; }
+    .site-header{ padding: 18px 24px 14px; }
     .site-header__logo img{ height: 108px; }
     .site-header.scrolled .site-header__logo img{ height: 68px; }
+
+    .nav-toggle{ display: flex; }
+    .nav-backdrop{ display: block; }
+    .nav-backdrop.visible{ opacity: 1; pointer-events: auto; }
 
     .main-nav{
       position: fixed;
       top: 0; right: 0;
-      width: min(320px, 84vw);
+      z-index: 3;
+      width: min(370px, 88vw);
       height: 100vh;
-      background: var(--white);
-      padding: 90px 30px 30px;
+      height: 100dvh;
+      background: var(--green-deep);
+      padding: 96px 30px 34px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+      overscroll-behavior: contain;
       transform: translateX(100%);
-      transition: transform .3s ease;
-      box-shadow: -8px 0 24px rgba(0,0,0,.15);
-      justify-content: flex-start;
+      transition: transform .4s cubic-bezier(.22,.61,.36,1);
+      box-shadow: -18px 0 44px rgba(0,0,0,.32);
     }
     .main-nav.open{ transform: translateX(0); }
+
     .main-nav ul{
       flex-direction: column;
-      align-items: flex-start;
-      gap: 4px;
+      align-items: stretch;
+      gap: 0;
     }
-    .main-nav a{ color: var(--charcoal); display: block; padding: 12px 0; width: 100%; }
-    .nav-toggle{ display: flex; top: 34px; }
+    .main-nav li{
+      border-bottom: 1px solid rgba(247,244,236,.13);
+    }
+    .main-nav li:first-child{
+      border-top: 1px solid rgba(247,244,236,.13);
+    }
+    .main-nav a{
+      font-family: var(--font-head);
+      font-size: 21px;
+      font-weight: 500;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--cream);
+      display: block;
+      padding: 16px 2px;
+      opacity: 0;
+      transform: translateX(22px);
+      transition: opacity .3s ease, transform .38s cubic-bezier(.22,.61,.36,1), color .2s ease;
+    }
+    .main-nav.open a{
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .main-nav.open li:nth-child(1) a{ transition-delay: .08s; }
+    .main-nav.open li:nth-child(2) a{ transition-delay: .12s; }
+    .main-nav.open li:nth-child(3) a{ transition-delay: .16s; }
+    .main-nav.open li:nth-child(4) a{ transition-delay: .20s; }
+    .main-nav.open li:nth-child(5) a{ transition-delay: .24s; }
+    .main-nav.open li:nth-child(6) a{ transition-delay: .28s; }
+    .main-nav a:active{ color: var(--tomato); }
+    .main-nav a::after{ display: none; }
+
+    .main-nav__foot{
+      display: block;
+      padding-top: 28px;
+    }
+    .main-nav__call{
+      display: block;
+      background: var(--tomato);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-align: center;
+      padding: 15px 18px;
+      border-radius: 2px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .3s ease .3s, transform .3s ease .3s;
+    }
+    .main-nav.open .main-nav__call{
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .main-nav__hours{
+      margin: 12px 0 0;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: rgba(247,244,236,.62);
+      text-align: center;
+    }
   }
 
   @media (max-width: 420px){
     .site-header__logo img{ height: 88px; }
     .site-header.scrolled .site-header__logo img{ height: 56px; }
-    .nav-toggle{ top: 26px; }
+    .main-nav{ padding: 92px 24px 28px; }
+    .main-nav a{ font-size: 19px; padding: 15px 2px; }
   }
 
-  /* ---------- HERO SECTION ---------- */
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    .main-nav,
+    .main-nav a,
+    .main-nav__call,
+    .nav-toggle span,
+    .nav-backdrop{
+      transition-duration: .01ms;
+      transition-delay: 0s;
+    }
+  }
+
   .hero{
     position: relative;
     height: 100vh;
@@ -346,7 +455,9 @@
     <img src="asd-output.png" alt="Révai Fruit Kft. - zöldség-gyümölcs nagykereskedelem logó">
   </a>
 
-  <nav class="main-nav" id="mainNav">
+  <div class="nav-backdrop" id="navBackdrop" hidden></div>
+
+  <nav class="main-nav" id="mainNav" aria-label="Főmenü">
     <ul>
       <li><a href="https://revaifruitkft.hu/">Kezdőlap</a></li>
       <li><a href="https://revaifruitkft.hu/tisztitott">Tisztított Zöldségek</a></li>
@@ -355,9 +466,13 @@
       <li><a href="https://revaifruitkft.hu/kapcsolat/">Kapcsolat</a></li>
       <li><a href="https://revaifruitkft.hu/galeria/">Galéria</a></li>
     </ul>
+
+    <div class="main-nav__foot">
+      <a class="main-nav__call" href="tel:+36302877988">+36 30 287 7988</a>
+    </div>
   </nav>
 
-  <button class="nav-toggle" id="navToggle" aria-label="Menü megnyitása" aria-expanded="false">
+  <button class="nav-toggle" id="navToggle" aria-label="Menü megnyitása" aria-expanded="false" aria-controls="mainNav">
     <span></span><span></span><span></span>
   </button>
 </header>
@@ -366,7 +481,7 @@
   <h1 class="sr-only">Révai Fruit Kft. — Zöldség-gyümölcs nagykereskedelem és kiszállítás Heves megyében</h1>
   <p class="sr-only">Friss zöldség-gyümölcs nagykereskedelem, éttermeknek szóló kiszállítás és konyhakész, tisztított termékek Heves megyében.</p>
 
-  <video id="heroVideo" autoplay loop muted playsinline aria-hidden="true"></video>
+  <video id="heroVideo" autoplay loop muted playsinline preload="auto" aria-hidden="true"></video>
 
   <div class="hero__actions">
     <a class="hero__btn" href="https://revaifruitkft.hu/kiszallitas">Zöldség-gyümölcs kiszállítás</a>
@@ -376,44 +491,66 @@
 </section>
 
 <script>
-
-  const videoElement = document.getElementById('heroVideo');
-  if (videoElement) {
-    const desktopSrc = "https://proba.revai-kristof001.workers.dev/";
-    const mobileSrc = "https://telefon.revai-kristof001.workers.dev/";
-
-    if (window.innerWidth <= 640) {
-      videoElement.src = mobileSrc;
-    } else {
-      videoElement.src = desktopSrc;
-    }
-
-    videoElement.load();
-  }
-  const header = document.getElementById('siteHeader');
-  const onScroll = () => {
-    if (window.scrollY > 40) header.classList.add('scrolled');
-    else header.classList.remove('scrolled');
-  };
-  window.addEventListener('scroll', onScroll);
-  onScroll();
-
   const heroVideo = document.getElementById('heroVideo');
   if (heroVideo) {
-    heroVideo.addEventListener('loadeddata', () => {
-      console.log('[hero video] sikeresen betöltött.');
-    });
+    const desktopSrc = "asztali.mp4";
+    const mobileSrc = "phone.mp4";
+
+    heroVideo.src = window.matchMedia('(max-width: 640px)').matches ? mobileSrc : desktopSrc;
+    heroVideo.load();
+
+    const playPromise = heroVideo.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(() => {});
+    }
+
     heroVideo.addEventListener('error', () => {
       const err = heroVideo.error;
       console.error('[hero video] NEM töltött be. Hibakód:', err ? err.code : 'ismeretlen');
     });
   }
 
+  const header = document.getElementById('siteHeader');
+  const onScroll = () => {
+    if (window.scrollY > 40) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
   const navToggle = document.getElementById('navToggle');
   const mainNav = document.getElementById('mainNav');
+  const navBackdrop = document.getElementById('navBackdrop');
+  const navLinks = mainNav.querySelectorAll('a');
+
+  function setNav(open){
+    mainNav.classList.toggle('open', open);
+    navToggle.classList.toggle('open', open);
+    navBackdrop.classList.toggle('visible', open);
+    navBackdrop.hidden = !open;
+    document.body.classList.toggle('nav-locked', open);
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? 'Menü bezárása' : 'Menü megnyitása');
+    if (open) {
+      navLinks[0].focus({ preventScroll: true });
+    }
+  }
+
   navToggle.addEventListener('click', () => {
-    const isOpen = mainNav.classList.toggle('open');
-    navToggle.setAttribute('aria-expanded', isOpen);
+    setNav(!mainNav.classList.contains('open'));
+  });
+
+  navBackdrop.addEventListener('click', () => setNav(false));
+
+  navLinks.forEach((link) => {
+    link.addEventListener('click', () => setNav(false));
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && mainNav.classList.contains('open')) {
+      setNav(false);
+      navToggle.focus();
+    }
   });
 
   function alignHeroWebshopButton(){
@@ -440,6 +577,9 @@
 
   let alignResizeTimer = null;
   window.addEventListener('resize', () => {
+    if (window.innerWidth > 960 && mainNav.classList.contains('open')) {
+      setNav(false);
+    }
     clearTimeout(alignResizeTimer);
     alignResizeTimer = setTimeout(alignHeroWebshopButton, 120);
   });
